@@ -1,3 +1,4 @@
+from matplotlib import pyplot as plt
 from scipy import signal
 import numpy as np
 from math import tau
@@ -89,7 +90,6 @@ def flat_time(vc, n = 5, thresh=0.01):
     return val_curve(v[index], v2, k[index], bt[index], ft[index])
 
 
-
 def thin(vc, factor):
     flow_size = len(vc.value)
     tfactor = sorted(default_rng().choice(range(flow_size), flow_size//factor, replace=False))
@@ -111,7 +111,7 @@ def gatescaler(values, thresh=0.5, isangle=False): #NOT BOUNDED ON [0,1] USE ONL
         if values[n] > thresh or thresh == 0:
             v += values[n]-thresh
         output[n] = v
-    return output if isangle==False else angle(output)
+    return val_curve(output if isangle==False else angle(output))
 
 def jitter(values = None, lr=0, hr=1, vs=None):
     global flow_size
@@ -127,3 +127,26 @@ def jitter(values = None, lr=0, hr=1, vs=None):
 
 def angle(values):
     return values % 360
+
+
+
+def visualize_audio_flows(audio_path):
+    print("broken")
+    exit(1)
+    # Plot
+    fig, axs = plt.subplots(3, 1, figsize=(12, 6))
+
+    axs[0].plot(flows.rms.value)
+    axs[0].set_ylabel('RMS (normalized)')
+
+    axs[1].plot(flows.colorwheel.value)
+    axs[1].set_ylabel('Color Wheel')
+
+    axs[2].plot(flows.centroid.value)
+    axs[2].set_ylabel('Spectral Centroid (normalized)')
+
+    for ax in axs:
+        ax.set_xlabel('Time (s)')
+
+    plt.tight_layout()
+    plt.show()

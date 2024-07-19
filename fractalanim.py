@@ -6,45 +6,19 @@ import sys
 import matplotlib.pyplot as plt
 np.set_printoptions(threshold=sys.maxsize)
 
-def visualize_audio_flows(audio_path):
-    audio_data, sr, frame_length, duration_f, duration_s = load_song(audio_path)
-    flows = compute_flows(audio_data, sr)
+from projects.scream.section0 import *
 
-    # Plot
-    fig, axs = plt.subplots(3, 1, figsize=(12, 6))
+audio_name = f"{name}_{number}"
 
-    axs[0].plot(flows.rms.value)
-    axs[0].set_ylabel('RMS (normalized)')
-
-    axs[1].plot(flows.colorwheel.value)
-    axs[1].set_ylabel('Color Wheel')
-
-    axs[2].plot(flows.centroid.value)
-    axs[2].set_ylabel('Spectral Centroid (normalized)')
-
-    for ax in axs:
-        ax.set_xlabel('Time (s)')
-
-    plt.tight_layout()
-    plt.show()
-
-from projects.truce.section1 import *
-
-visualize_audio_flows(audiopath)
-
-exit(0)
-
-song, sr, _, duration_f, duration_s = load_song(audiopath)
+song, sr, _, duration_f, duration_s = load_song(f"{audioroot}/{audio_name}.wav")
 flows = compute_flows(song, sr)
-print(f"{flows.rms.value.shape}, {np.mean(flows.colorwheel.value)}")
-
-
+print(f"Computed flows for {audio_name}")
 
 stems = []
 sflows = {}
-for s in stemnames:
-    sflows[s] = compute_flows(load_song(f"{audioroot}/{s}.wav", stem=True)[0], sr)
-    print(f" - Computed flows for stem: {s}")
+for s in stem_suf:
+    sflows[s] = compute_flows(load_song(f"{audioroot}/{audio_name}{s}.wav", stem=True)[0], sr)
+    print(f" - Computed flows for stem: {audio_name}{s}")
 
 print("Finished computing stem-flows.")
 
@@ -70,5 +44,6 @@ iterators = [iterator(param) for param in paramlist]
 
 animate(iterators, flows, sflows)
 
-flame.write('chaos/new.chaos')
-print("Successfully wrote chaos/new.chaos. Exiting")
+flame.write(f"chaos/{name}/new.chaos")
+
+print(f"Successfully wrote chaos/{name}/new.chaos. Exiting")

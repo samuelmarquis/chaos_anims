@@ -22,10 +22,10 @@ def calculateOverlap(overlap_len, tran_point, interp_len, path_s, path_e): #inte
     first = os.path.join(path_e, sorted_alphanumeric(os.listdir(path_e))[tran_point])
     print(path_e + first)
     return last, first
-def copyrename(name, project, makevid = False):
-    input("WARNING: ARE YOU SURE? DO YOU REALLY WANT TO COPY OVER DIFFUSION WITH CHAOTICA IMAGES?")
-    ipath = f"../../Projects/Visual/Chaotica/anims/{name}/"
-    opath = f"finished_frameseqs/{name}/"
+def copyrename(number, project, makevid = False):
+    #input("WARNING: ARE YOU SURE? DO YOU REALLY WANT TO COPY OVER DIFFUSION WITH CHAOTICA IMAGES?")
+    ipath = f"../../Projects/Visual/Chaotica/anims/{project}/{number}/"
+    opath = f"finished_frameseqs/{project}/{number}/"
     counter = 0
     n = len([x for x in os.listdir(ipath) if 'mp4' not in x])
     try:
@@ -45,7 +45,7 @@ def copyrename(name, project, makevid = False):
     if len(os.listdir(opath)) % 30 != 0:
         print("WARNING: clip length is not a multiple of 30. Double check frame count.")
         input("Press enter to continue")
-    if makevid: ffmpeg_wrapper(opath, project+'/'+name+'s', name)
+    if makevid: ffmpeg_wrapper(opath, f"{project}/{project}_{number}s", f"{project}_{number}")
 
 
 
@@ -76,7 +76,7 @@ tran_points     = [30,12,0, 12,0, 12,12,18,0, 12,20, 15, 18, 13, 14, 0,  2,  15,
 interp_len      = 8 #INTERP FRAMES - 1. DON'T QUESTION IT
 out = "../frame-interpolation/photos/interpolated_frames"
 
-copyrename('truce_1', 'truce', makevid=True)
+copyrename(0, 'scream', makevid=True)
 
 exit(1)
 #copyrename(to_merge[-1][:-1], True)

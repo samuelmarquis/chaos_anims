@@ -47,7 +47,7 @@ for p in stemprefixes:
 counter = 0
 toggle = 0
 othercounter = 0
-for f in os.listdir('finished_frameseqs/scream_4'):
+for f in os.listdir('finished_frameseqs/old/scream_4'):
     image = load_image(f"finished_frameseqs/scream_4/{f}")
     if (sflows['p']["rms"][counter] < 0.45) or othercounter > 41:
         if toggle == 1:

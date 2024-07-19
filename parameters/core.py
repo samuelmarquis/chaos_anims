@@ -5,6 +5,7 @@ from librosa.feature import chroma_cqt
 from scipy.fftpack import fft
 from scipy.interpolate import PchipInterpolator
 from numpy.random import default_rng
+
 flow_size = 0
 
 class val_curve:
@@ -37,6 +38,8 @@ class val_curve:
         value2 = None
         if not isinstance(other, val_curve):
             other = val_curve(other)
+        print(len(other.value))
+        print(len(self.value))
         assert len(self.value) == len(other.value) # n!=m, n-knot and m-knot flows interacting is UB
         value = f(self.value, other.value)
         if self.value2 is not None:
@@ -63,6 +66,12 @@ class val_curve:
 
     def __pow__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x ** y))
+
+    def __len__(self):
+        return len(self.value)
+
+    def __getitem__(self, key):
+        return self.value[key]
 
     def cos(self):
         return self._uoperatorimpl(self, (lambda x : np.cos(x)))
@@ -160,9 +169,6 @@ def compute_flows(song, sr):
         formant_freqs = np.zeros((flow_size, nformants))
         for i in range(flow_size):
             magnitude_spectrum = np.abs(fft_signal[i * fl:(i + 1) * fl])
-            #print(magnitude_spectrum.shape)
-            # Find the formants by identifying the peaks in the magnitude spectrum
-            #print(f"{freq_bins[np.argsort(magnitude_spectrum)[0]]}:{freq_bins[np.argsort(magnitude_spectrum)[-1]]}")
             formant_freqs[i] = freq_bins[np.argsort(magnitude_spectrum)[-nformants:]]
 
         return flux, contrast, bandwidth, centroid, rolloff, harmrms, percrms, onset, formant_freqs
@@ -241,3 +247,7 @@ def compute_flows(song, sr):
         r.__dict__['flowdict'][key] = val_curve(value)
 
     return r
+
+def lin():
+    global flow_size
+    return val_curve(np.linspace(0, 1, flow_size))
