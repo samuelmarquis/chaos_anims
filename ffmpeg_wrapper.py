@@ -1,7 +1,7 @@
 import subprocess
 def ffmpeg_wrapper(frameseq_dir, audio_name,output_name):
     args = ['C:\Windows\System32\wsl.exe',
-            'ffmpeg',
+            'ffmpeg', '-y',
             '-framerate', '30',
             '-i', f'{frameseq_dir}/%05d.png',
             '-i', f'audio/{audio_name}.wav',

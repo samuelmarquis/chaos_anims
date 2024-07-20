@@ -38,8 +38,8 @@ class val_curve:
         value2 = None
         if not isinstance(other, val_curve):
             other = val_curve(other)
-        print(len(other.value))
-        print(len(self.value))
+        #print(len(other.value))
+        #print(len(self.value))
         assert len(self.value) == len(other.value) # n!=m, n-knot and m-knot flows interacting is UB
         value = f(self.value, other.value)
         if self.value2 is not None:
@@ -58,6 +58,12 @@ class val_curve:
     def __add__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x + y))
 
+    def __sub__(self, other):
+        return self._boperatorimpl(self, other, (lambda x, y : x - y))
+
+    def __rsub__(self, other):
+        return self._boperatorimpl(self, other, (lambda x, y : y - x))
+
     def __mul__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x * y))
 
@@ -72,6 +78,9 @@ class val_curve:
 
     def __getitem__(self, key):
         return self.value[key]
+
+    def __neg__(self):
+        return self._uoperatorimpl(self, lambda x : -x)
 
     def cos(self):
         return self._uoperatorimpl(self, (lambda x : np.cos(x)))
@@ -91,6 +100,9 @@ class iterator:
               else " ".join(np.char.mod('%f', np.dstack((values, values2)).flatten()))
         global flow_size
         param = self.__getattr__(param)
+        if type(flow) is tuple:
+            a,b = flow
+            flow = val_curve(a.value, b.value, a.knots, a.bten, a.ften)
         values, values2, knots, bten, ften = flow.unpack()
         assert len(values) == len(knots) == len(bten) == len(ften)
         assert values2 is None or len(values) == len(values2)
@@ -243,6 +255,9 @@ def compute_flows(song, sr):
         assert isinstance(value, np.ndarray)
         if key != "colorwheel" or not np.all(value): #it's special because it has to be [0,1)
             value = unorm(value)
+        if key == "colorwheel":
+            value = value.flatten()[:flow_size]
+        #print(key)
         assert len(value) == flow_size
         r.__dict__['flowdict'][key] = val_curve(value)
 

@@ -1,4 +1,4 @@
 project_name = "scream"
-title = "scream"
+name = "scream"
 audioroot = "audio/scream"
 chaosroot = "chaos/scream"

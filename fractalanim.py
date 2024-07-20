@@ -6,7 +6,7 @@ import sys
 import matplotlib.pyplot as plt
 np.set_printoptions(threshold=sys.maxsize)
 
-from projects.scream.section0 import *
+from projects.scream.section5 import *
 
 audio_name = f"{name}_{number}"
 
@@ -27,9 +27,19 @@ flame = ET.parse(flamepath)
 root = flame.getroot()
 parent_map = {c: p for p in root.iter() for c in p}
 iteratorsparent = root[1].find("node") #iterators. 1 is hardcoded bc format version is 0
+camera = root[1].find("camera")
 assert(iteratorsparent.get("name") == "iterators")
 paramlist = []
 # FIND ANIMATION POINTS
+paramlist.append({})
+print("# Camera:")
+for curve in itertools.chain(camera.iter('curve'), camera.iter('vec2_curve')):
+    if (curve.get('name') == 'val_curve'):
+        x = parent_map[curve].get('name')
+        x = x.replace(" ", "_")
+        paramlist[-1][x] = curve
+        print(f"iterators[{len(paramlist) - 1}].{x} = ")
+
 for child in iteratorsparent.findall('iterator'):
     print(f"# {child.get('name')}:")
     paramlist.append({})

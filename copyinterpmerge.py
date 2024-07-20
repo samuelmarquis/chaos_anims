@@ -14,7 +14,7 @@ def sorted_alphanumeric(data):
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(data, key=alphanum_key)
 
-def calculateOverlap(overlap_len, tran_point, interp_len, path_s, path_e): #interp len must be one less than the number of new frames
+def calculate_overlap(overlap_len, tran_point, interp_len, path_s, path_e): #interp len must be one less than the number of new frames
     tran_start = (tran_point - overlap_len) - interp_len
     last = os.path.join(path_s, sorted_alphanumeric(os.listdir(path_s))[tran_start]) #put plus one here and set interp len back to what its supposed to be.. later
 
@@ -76,9 +76,9 @@ tran_points     = [30,12,0, 12,0, 12,12,18,0, 12,20, 15, 18, 13, 14, 0,  2,  15,
 interp_len      = 8 #INTERP FRAMES - 1. DON'T QUESTION IT
 out = "../frame-interpolation/photos/interpolated_frames"
 
-copyrename(0, 'scream', makevid=True)
+copyrename(5, 'scream', makevid=True)
 
-exit(1)
+exit(0)
 #copyrename(to_merge[-1][:-1], True)
 n = []
 paths_s = []

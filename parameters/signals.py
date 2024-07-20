@@ -25,23 +25,25 @@ def alternating_mask(points, hv=1):
         n ^= hv
     return val_curve(r)
 
-def slew(values, rate, direction = 'both'): #direction can be 'up', 'down', or 'both'
+def slew(vc, rate, direction = 'both'): #direction can be 'up', 'down', or 'both'
+    values, v2, k, bt, ft = vc.unpack()
     newval = values
     if direction == 'up':
         for i in range(len(values) - 1):
             if abs(values[i + 1] - values[i]) > rate and values[i+1] > values[i]:
                 newval[i + 1] = values[i] + rate
-        return newval
+
     if direction == 'down':
         for i in range(len(values) - 1):
             if abs(values[i + 1] - values[i]) > rate and values[i + 1] < values[i]:
                 newval[i + 1] = values[i] - rate
-        return newval
+
     if direction == 'both':
         for i in range(len(values) - 1):
             if abs(values[i + 1] - values[i]) > rate:
                 newval[i + 1] = values[i] + (rate * (-1 if values[i] > values[i+1] else 1))
-        return newval
+
+    return val_curve(newval, v2, k, bt, ft)
 
 def iron(values, thresh=0.1):
     r = values
