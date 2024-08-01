@@ -76,7 +76,7 @@ tran_points     = [30,12,0, 12,0, 12,12,18,0, 12,20, 15, 18, 13, 14, 0,  2,  15,
 interp_len      = 8 #INTERP FRAMES - 1. DON'T QUESTION IT
 out = "../frame-interpolation/photos/interpolated_frames"
 
-copyrename(5, 'scream', makevid=True)
+copyrename(9, 'scream', makevid=True)
 
 exit(0)
 #copyrename(to_merge[-1][:-1], True)

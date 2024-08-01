@@ -67,6 +67,9 @@ class val_curve:
     def __mul__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x * y))
 
+    def __rmul__(self, other):
+        return self._boperatorimpl(self, other, (lambda x, y: x * y))
+
     def __truediv__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x / y))
 
@@ -140,6 +143,10 @@ def load_song(path, stem=False):
         flow_size = duration_f  # only place this should EVER be written to
     else:
         assert duration_f == flow_size #if stems aren't the same size there is a good chance of alignment issues
+
+    with open("flow.dat", "w") as f:
+        f.write(str(flow_size))
+
     return song,sr,fl,duration_f,duration_s
 
 def compute_flows(song, sr):
@@ -263,6 +270,3 @@ def compute_flows(song, sr):
 
     return r
 
-def lin():
-    global flow_size
-    return val_curve(np.linspace(0, 1, flow_size))

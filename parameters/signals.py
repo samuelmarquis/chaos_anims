@@ -4,7 +4,11 @@ import numpy as np
 from math import tau
 from numpy.random import default_rng
 from scipy.interpolate import PchipInterpolator
-from .core import val_curve, flow_size
+from .core import val_curve
+
+def read_flow_size():
+    with open("flow.dat", "r") as f:
+        return int(f.readline())
 
 def pol2car(rho, phi):
     rho = rho.value
@@ -17,13 +21,17 @@ def lti(values):
     return signal.lti(values)
 
 def alternating_mask(points, hv=1):
-    global flow_size
+    flow_size = read_flow_size()
     r = np.zeros(flow_size)
     n = hv
     for p in points:
         r[p:] = n
         n ^= hv
     return val_curve(r)
+
+def lin():
+    flow_size = read_flow_size()
+    return val_curve(np.linspace(0, 1, flow_size))
 
 def slew(vc, rate, direction = 'both'): #direction can be 'up', 'down', or 'both'
     values, v2, k, bt, ft = vc.unpack()
@@ -73,7 +81,7 @@ def flat_time(vc, n = 5, thresh=0.01):
     index = [0]
     r = v[0]
     sc = 0
-    for i in range(1, len(v)):
+    for i in range(1, len(v)-n):
         if sc > 0:
             sc -= 1
             continue
@@ -129,8 +137,6 @@ def jitter(values = None, lr=0, hr=1, vs=None):
 
 def angle(values):
     return values % 360
-
-
 
 def visualize_audio_flows(audio_path):
     print("broken")
