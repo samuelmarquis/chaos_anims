@@ -6,7 +6,7 @@ import sys
 import matplotlib.pyplot as plt
 np.set_printoptions(threshold=sys.maxsize)
 
-from projects.scream.section9 import *
+from projects.scream.section11 import *
 
 audio_name = f"{name}_{number}"
 
@@ -50,7 +50,7 @@ for child in iteratorsparent.findall('iterator'):
             paramlist[-1][x] = curve
             print(f"iterators[{len(paramlist)-1}].{x} = ")
             
-iterators = [iterator(param) for param in paramlist]
+iterators = [Iterator(param) for param in paramlist]
 
 animate(iterators, flows, sflows)
 

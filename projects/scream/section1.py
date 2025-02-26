@@ -15,7 +15,7 @@ def animate(iterators, flows, sflows):
     kflows = sflows["k"]
     iflows = sflows["i"]
     bflows = sflows["b"]
-    v0 = val_curve(0)
+    v0 = ValCurve(0)
     # Iterator 1:
     iterators[0].offset = pol2car(kflows.rms, vflows.colorwheel)
     # Iterator 2:

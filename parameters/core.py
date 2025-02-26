@@ -8,7 +8,7 @@ from numpy.random import default_rng
 
 flow_size = 0
 
-class val_curve:
+class ValCurve:
     def __init__(self, value, value2 = None, knots = None, bten = None, ften = None):
         global flow_size
         if not isinstance(value, np.ndarray):
@@ -36,14 +36,14 @@ class val_curve:
     @classmethod
     def _boperatorimpl(cls, self, other, f):
         value2 = None
-        if not isinstance(other, val_curve):
-            other = val_curve(other)
+        if not isinstance(other, ValCurve):
+            other = ValCurve(other)
         #print(len(other.value))
         #print(len(self.value))
         assert len(self.value) == len(other.value) # n!=m, n-knot and m-knot flows interacting is UB
         value = f(self.value, other.value)
         if self.value2 is not None:
-            other = val_curve.as2d(other)
+            other = ValCurve.as2d(other)
             value2 = f(self.value2, other.value2)
         return cls(value, value2, self.knots, self.ften, self.bten)
 
@@ -57,6 +57,9 @@ class val_curve:
 
     def __add__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x + y))
+
+    def __radd__(self, other):
+        return self._boperatorimpl(self, other, (lambda x, y: x + y))
 
     def __sub__(self, other):
         return self._boperatorimpl(self, other, (lambda x, y : x - y))
@@ -94,18 +97,18 @@ class val_curve:
     def unpack(self):
         return self.value, self.value2, self.knots, self.bten, self.ften
 
-class iterator:
+class Iterator:
     def __init__(self, params):
         self.__dict__['iterator'] = params
     def __setattr__(self, param, flow):
         def encode_flow(values, values2=None):
             return " ".join(np.char.mod('%f', values)) if values2 is None \
               else " ".join(np.char.mod('%f', np.dstack((values, values2)).flatten()))
-        global flow_size
+
         param = self.__getattr__(param)
         if type(flow) is tuple:
             a,b = flow
-            flow = val_curve(a.value, b.value, a.knots, a.bten, a.ften)
+            flow = ValCurve(a.value, b.value, a.knots, a.bten, a.ften)
         values, values2, knots, bten, ften = flow.unpack()
         assert len(values) == len(knots) == len(bten) == len(ften)
         assert values2 is None or len(values) == len(values2)
@@ -120,7 +123,7 @@ class iterator:
         raise KeyError
 
 
-class flowholder():
+class Flow:
     def __init__(self, flowdict):
         self.__dict__['flowdict'] = flowdict
 
@@ -231,7 +234,7 @@ def compute_flows(song, sr):
     unorm = lambda n : (n.flatten()[:flow_size])/n.max()
     bnorm = lambda n: ((n.flatten()[:flow_size])/n.max()) * 2 - 1
 
-    r = flowholder({})
+    r = Flow({})
 
     (r.flux, r.contrast, r.bandwidth, r.centroid, r.rolloff,
      r.harmrms, r.percrms, r.onset, formant_freqs) = compute_spectral_flows()
@@ -266,7 +269,7 @@ def compute_flows(song, sr):
             value = value.flatten()[:flow_size]
         #print(key)
         assert len(value) == flow_size
-        r.__dict__['flowdict'][key] = val_curve(value)
+        r.__dict__['flowdict'][key] = ValCurve(value)
 
     return r
 

@@ -4,7 +4,7 @@ import numpy as np
 from math import tau
 from numpy.random import default_rng
 from scipy.interpolate import PchipInterpolator
-from .core import val_curve
+from .core import ValCurve
 
 def read_flow_size():
     with open("flow.dat", "r") as f:
@@ -15,7 +15,7 @@ def pol2car(rho, phi):
     phi = phi.value
     x = rho * np.cos(phi*tau)
     y = rho * np.sin(phi*tau)
-    return val_curve(x, y)
+    return ValCurve(x, y)
 
 def lti(values):
     return signal.lti(values)
@@ -27,11 +27,11 @@ def alternating_mask(points, hv=1):
     for p in points:
         r[p:] = n
         n ^= hv
-    return val_curve(r)
+    return ValCurve(r)
 
 def lin():
     flow_size = read_flow_size()
-    return val_curve(np.linspace(0, 1, flow_size))
+    return ValCurve(np.linspace(0, 1, flow_size))
 
 def slew(vc, rate, direction = 'both'): #direction can be 'up', 'down', or 'both'
     values, v2, k, bt, ft = vc.unpack()
@@ -51,7 +51,7 @@ def slew(vc, rate, direction = 'both'): #direction can be 'up', 'down', or 'both
             if abs(values[i + 1] - values[i]) > rate:
                 newval[i + 1] = values[i] + (rate * (-1 if values[i] > values[i+1] else 1))
 
-    return val_curve(newval, v2, k, bt, ft)
+    return ValCurve(newval, v2, k, bt, ft)
 
 def iron(values, thresh=0.1):
     r = values
@@ -74,7 +74,7 @@ def flat_thin(vc, thresh=0.01, n=5):
             r = v[i]
     if v2 is not None:
         v2 = v2[index]
-    return val_curve(v[index],v2,k[index],bt[index],ft[index])
+    return ValCurve(v[index], v2, k[index], bt[index], ft[index])
 
 def flat_time(vc, n = 5, thresh=0.01):
     v, v2, k, bt, ft = vc.unpack()
@@ -97,7 +97,7 @@ def flat_time(vc, n = 5, thresh=0.01):
                 r = v[i]
     if v2 is not None:
         v2 = v2[index]
-    return val_curve(v[index], v2, k[index], bt[index], ft[index])
+    return ValCurve(v[index], v2, k[index], bt[index], ft[index])
 
 
 def thin(vc, factor):
@@ -106,10 +106,13 @@ def thin(vc, factor):
     values2 = None
     if vc.value2 is not None:
         values2 = vc.value2[tfactor]
-    return val_curve(vc.value[tfactor], values2, vc.knots[tfactor], vc.bten[tfactor], vc.ften[tfactor])
+    return ValCurve(vc.value[tfactor], values2, vc.knots[tfactor], vc.bten[tfactor], vc.ften[tfactor])
 
-def bound(values, high=1, low=0):
-    return values.clip(min=low, max=high)
+def clamp(vc, high=1, low=0):
+    v, v2, k, bt, ft = vc.unpack()
+    if v2 is not None:
+        v2 = v2.clip(min=low,max=high)
+    return ValCurve(v.clip(min=low, max=high), v2, k, bt, ft)
 
 def sinusoidal(values, high=1, low=0):
     return np.sin((values * np.pi / len(values)) + (3*np.pi / 2))
@@ -121,7 +124,7 @@ def gatescaler(values, thresh=0.5, isangle=False): #NOT BOUNDED ON [0,1] USE ONL
         if values[n] > thresh or thresh == 0:
             v += values[n]-thresh
         output[n] = v
-    return val_curve(output if isangle==False else angle(output))
+    return ValCurve(output if isangle == False else angle(output))
 
 def jitter(values = None, lr=0, hr=1, vs=None):
     global flow_size
