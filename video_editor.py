@@ -20,3 +20,6 @@ def crop_framesplit(source_file, target_dir, size):
     #vf.audio = a
 
     vf.write_images_sequence(f'{target_dir}/%05d.png')
+
+if __name__ == '__main__':
+    None

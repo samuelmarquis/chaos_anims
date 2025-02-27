@@ -47,20 +47,20 @@ if skip_to <= 4:
     print("Masking style")
     mask(f"{pdir}/style", f"{pdir}/style_masks", 512)
 
-# STEP 5 style frames -> style masks -> source masks -> output frames
+# STEP 5: ebsynth :: style frames -> style masks -> source masks -> output frames
 if skip_to <= 5:
     print("Running ebsynth")
     ebsynth_wrapper(f"{pdir}/style",
-                    f"{pdir}/style_masks",
+                    f"{pdir}/style_masktest",
                     f"{pdir}/masks",
-                    f"{pdir}/output")
+                    f"{pdir}/bad_out")
 
-n = 0
-for f in sorted_alphanumeric(os.listdir(f"{pdir}/bad_out")):
-    image = Image.open(f"{pdir}/bad_out/{f}").save(f"{pdir}/output/{n:05}.png")
-    n += 1
+#n = 0
+#for f in sorted_alphanumeric(os.listdir(f"{pdir}/bad_out")):
+#    image = Image.open(f"{pdir}/bad_out/{f}").save(f"{pdir}/output/{n:05}.png")
+#    n += 1
 
-# STEP 6 output frames -> video
+# STEP 6: output frames -> video
 if skip_to <= 6:
     print("Running ffmpeg")
-    ffmpeg_wrapper(f"{pdir}/output", audio_name, name)
+    ffmpeg_wrapper(f"{pdir}/bad_out", audio_name, "scream11")

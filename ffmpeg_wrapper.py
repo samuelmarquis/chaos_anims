@@ -15,4 +15,5 @@ def ffmpeg_wrapper(frameseq_dir, audio_name,output_name):
     #yes = subprocess.Popen(['C:\Windows\System32\wsl.exe', 'yes'], stdout=subprocess.PIPE)
     subprocess.run(args, shell=True)
 
-#ffmpeg_wrapper('vid_pipe/output', 'scream/scream_0s', 'scream0_test')
+if __name__ == '__main__':
+        ffmpeg_wrapper('vid_pipe/output', 'scream/scream_0s', 'scream0_test')
