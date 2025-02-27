@@ -19,11 +19,20 @@ makedirs(f"{pdir}/style", exist_ok=True)
 makedirs(f"{pdir}/style_masks", exist_ok=True)
 makedirs(f"{pdir}/output", exist_ok=True)
 
+# src video -> square-cropped frame sequences
 crop_framesplit(f"{input_vid}", f"{pdir}/src_frames")
+
+# source frames -> source mask
 segment(f"{pdir}/src_frames", f"{pdir}/masks")
+
+# style frames -> style mask
 mask(f"{style_dir}", f"{pdir}/style_masks")
+
+# style frames -> style masks -> source masks -> output frames
 ebsynth_wrapper(f"{style_dir}",
                 f"{pdir}/style_masks",
                 f"{pdir}/masks",
                 f"{pdir}/output")
+
+# output frames -> video
 ffmpeg_wrapper(f"{pdir}/output", audio_name, name)
