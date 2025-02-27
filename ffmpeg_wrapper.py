@@ -1,10 +1,11 @@
 import subprocess
+
 def ffmpeg_wrapper(frameseq_dir, audio_name,output_name):
     args = ['C:\Windows\System32\wsl.exe',
             'ffmpeg', '-y',
             '-framerate', '30',
             '-i', f'{frameseq_dir}/%05d.png',
-            '-i', f'{audio_name}.wav',
+            '-i', f'{audio_name}',
             '-map', '0:v', '-map', '1:a',
             '-b:a', '320k', '-c:v', 'libx264', '-crf', '28',
             '-strict', '2', '-preset', 'slow', '-pix_fmt', 'yuv420p',

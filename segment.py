@@ -6,15 +6,18 @@ import torch
 from torchvision import transforms
 from transformers import AutoModelForImageSegmentation
 from util import sorted_alphanumeric
+import warnings
 
-def segment(source_dir, target_dir):
+warnings.filterwarnings('ignore')
+
+def segment(source_dir, target_dir, size):
     model = AutoModelForImageSegmentation.from_pretrained('briaai/RMBG-2.0', trust_remote_code=True)
     torch.set_float32_matmul_precision(['high', 'highest'][0])
     model.to('cuda')
     model.eval()
 
     # Data settings
-    image_size = (1024, 1024)
+    image_size = (size, size)
     transform_image = transforms.Compose([
         transforms.Resize(image_size),
         transforms.ToTensor(),
@@ -35,4 +38,4 @@ def segment(source_dir, target_dir):
         mask.save(f"{target_dir}/{f}")
         n += 1
         if n % 100 == 0 and n > 0:
-            print(f"Processed {n} images")
+            print(f" - segmented {n} source images")
