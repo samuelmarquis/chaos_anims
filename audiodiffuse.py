@@ -106,7 +106,7 @@ if True:
 
         n2v = [x**2 for x in nv] #rms loudness
         rms = np.sqrt(np.mean(n2v))
-        lstren = min(rms/loudest, 0.85) #1.0 completely disregards input image so we cap slightly lower
+        lstren = min(rms/loudest, 0.85) #1.0 completely disregards source image so we cap slightly lower
 
         print("rendering frame " + str(counter) + " with strength = " + str(lstren))
 

@@ -4,9 +4,9 @@ def ffmpeg_wrapper(frameseq_dir, audio_name,output_name):
             'ffmpeg', '-y',
             '-framerate', '30',
             '-i', f'{frameseq_dir}/%05d.png',
-            '-i', f'audio/{audio_name}.wav',
+            '-i', f'{audio_name}.wav',
             '-map', '0:v', '-map', '1:a',
-            '-b:a', '320k', '-c:v', 'libx264',
+            '-b:a', '320k', '-c:v', 'libx264', '-crf', '28',
             '-strict', '2', '-preset', 'slow', '-pix_fmt', 'yuv420p',
             '-shortest',
             '-f', 'mp4',
@@ -14,4 +14,4 @@ def ffmpeg_wrapper(frameseq_dir, audio_name,output_name):
     #yes = subprocess.Popen(['C:\Windows\System32\wsl.exe', 'yes'], stdout=subprocess.PIPE)
     subprocess.run(args, shell=True)
 
-#ffmpeg_wrapper('finished_frameseqs/setmefree_2c', 'setmefree/setmefree_2s', 'setmefree_2c')
+#ffmpeg_wrapper('vid_pipe/output', 'scream/scream_0s', 'scream0_test')

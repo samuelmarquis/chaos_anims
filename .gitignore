@@ -14,3 +14,15 @@ scream_scratch Project
 singlediffuseout
 source_video
 vid_pipe
+.idea
+__pycache__
+projects/__pycache__
+projects/fullbodysprain/__pycache__
+projects/scream/__pycache__
+projects/truce/__pycache__
+
+*.png
+new.chaos
+prompt.txt
+temp.py
+uv.lock

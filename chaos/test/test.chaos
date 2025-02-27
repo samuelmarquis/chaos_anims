@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<world name="World">
+	<int name="format_version">2</int>
+	<IFS name="New empty world">
+		<imaging name="Imaging">
+			<int name="image_width">1024</int>
+			<int name="image_height">1024</int>
+			<int name="image_aa_level">2</int>
+			<int name="image_layers">1</int>
+			<string name="antialiasing_mode">smooth</string>
+			<real name="brightness">4</real>
+			<vec4 name="background_colour">0 0 0 1</vec4>
+			<bool name="apply_bg_before_curves">false</bool>
+			<real name="flam3_gamma">1</real>
+			<real name="flam3_vibrancy">0.93</real>
+			<bool name="flam3_use_highlight_power">false</bool>
+			<real name="flam3_highlight_power">3.8</real>
+			<real name="flam3_gamma_linear_threshold">0.5</real>
+			<table name="layer_weights">
+				<values>1 1 1 1</values>
+			</table>
+		</imaging>
+		<real name="anim_length">40</real>
+		<real name="anim_fps">30</real>
+		<real name="anim_exposure_time">0.0333</real>
+		<string name="anim_exposure_shape">uniform</string>
+		<camera name="Camera">
+			<vec2 name="pos">0 0</vec2>
+			<real name="rotate">0</real>
+			<real name="sensor_width">4</real>
+		</camera>
+		<node name="iterators">
+			<iterator name="Iterator 1">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 24.033333 30</values>
+								</table>
+								<table name="values">
+									<values>0 47.779167 -0.18176895</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="x_axis_length">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 3.4 7.5333333</values>
+								</table>
+								<table name="values">
+									<values>0.93351036 1.4023114 1.0097498</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="y_axis_angle">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 24.033333 30</values>
+								</table>
+								<table name="values">
+									<values>90 137.77916 89.81822</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="y_axis_length">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 3.4 7.5333333</values>
+								</table>
+								<table name="values">
+									<values>0.93351036 1.4023114 1.0097498</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0</values>
+								</table>
+							</curve>
+						</real>
+						<vec2 name="offset">
+							<vec2_curve name="val_curve">
+								<table name="knots">
+									<values>0 26.833334 30</values>
+								</table>
+								<table name="values">
+									<values>0 0 0 -0.5 0 0</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0</values>
+								</table>
+							</vec2_curve>
+						</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">noise</string>
+							<params>
+								<real name="noise">1</real>
+							</params>
+						</flam3_variation>
+						<flam3_variation name="New variation">
+							<string name="variation_name">murl2</string>
+							<params>
+								<real name="murl2">1</real>
+								<real name="murl2_c">0</real>
+								<real name="murl2_power">2</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0.4356541186571121</real>
+					<real name="blend_speed">0.7554491058333995</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 2">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 3.4 15.1 18.766666 30</values>
+								</table>
+								<table name="values">
+									<values>-5.2316346 -49.76621 -24.127142 132.71835 136.02644</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0 0 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0 0 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="x_axis_length">1.1371587810730794</real>
+						<real name="y_axis_angle">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 3.4 15.1 18.766666 30</values>
+								</table>
+								<table name="values">
+									<values>84.768364 40.23379 65.872856 222.71835 226.02644</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0 0 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0 0 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="y_axis_length">1.1371587810730794</real>
+						<vec2 name="offset">
+							<vec2_curve name="val_curve">
+								<table name="knots">
+									<values>0 7.5333333 12.466666 15.1 18.766666 19.1 26.833334 30</values>
+								</table>
+								<table name="values">
+									<values>-0.75 0 -0.75 0 -1 0 -1.25 0 -0.75 0 2 0 0.75 0 0 0</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0 0 0 0 0 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0 0 0 0 0 0</values>
+								</table>
+							</vec2_curve>
+						</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">ngon</string>
+							<params>
+								<real name="ngon">1</real>
+								<real name="ngon_sides">4</real>
+								<real name="ngon_power">2</real>
+								<real name="ngon_corners">1</real>
+								<real name="ngon_circle">1</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0.7408240761142224</real>
+					<real name="blend_speed">0.31114359965759597</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 3">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 6.1666665 11.566667 17.133333</values>
+								</table>
+								<table name="values">
+									<values>0 2.2041092 90.257126 180.57544</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="x_axis_length">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 30</values>
+								</table>
+								<table name="values">
+									<values>1 0.18296501</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1</values>
+								</table>
+							</curve>
+						</real>
+						<real name="y_axis_angle">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 6.1666665 11.566667 17.133333</values>
+								</table>
+								<table name="values">
+									<values>90 92.20411 180.25713 270.57544</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1 0 0</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1 0 0</values>
+								</table>
+							</curve>
+						</real>
+						<real name="y_axis_length">
+							<curve name="val_curve">
+								<table name="knots">
+									<values>0 30</values>
+								</table>
+								<table name="values">
+									<values>1 0.18296501</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1</values>
+								</table>
+							</curve>
+						</real>
+						<vec2 name="offset">
+							<vec2_curve name="val_curve">
+								<table name="knots">
+									<values>0 26.5</values>
+								</table>
+								<table name="values">
+									<values>0 0.5 0 0</values>
+								</table>
+								<table name="back_tension">
+									<values>1 1</values>
+								</table>
+								<table name="forw_tension">
+									<values>1 1</values>
+								</table>
+							</vec2_curve>
+						</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">super_shape</string>
+							<params>
+								<real name="super_shape">1</real>
+								<real name="super_shape_rnd">0.5</real>
+								<real name="super_shape_m">4</real>
+								<real name="super_shape_n1">1</real>
+								<real name="super_shape_n2">0</real>
+								<real name="super_shape_n3">0</real>
+								<real name="super_shape_holes">0</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0</real>
+					<real name="blend_speed">0.5</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+		</node>
+		<colouring>
+			<curve name="hue">
+				<table name="knots">
+					<values>0 0.14285715 0.2857143 0.42857146 0.5714286 0.71428573 0.8571429 1</values>
+				</table>
+				<table name="values">
+					<values>0.5669664 0.5124415 0.4776371 0.64980316 0.55870986 0.8262386 0.74815 0.52521396</values>
+				</table>
+				<table name="back_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+				<table name="forw_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+			</curve>
+			<curve name="saturation">
+				<table name="knots">
+					<values>0 0.14285715 0.2857143 0.42857146 0.5714286 0.71428573 0.8571429 1</values>
+				</table>
+				<table name="values">
+					<values>0.31348643 0.32860595 0.8592295 0.51210135 0.730134 0.6294546 0.79045486 0.547557</values>
+				</table>
+				<table name="back_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+				<table name="forw_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+			</curve>
+			<curve name="value">
+				<table name="knots">
+					<values>0 0.14285715 0.2857143 0.42857146 0.5714286 0.71428573 0.8571429 1</values>
+				</table>
+				<table name="values">
+					<values>0.7740663 1.228641 0.7003803 0.63120997 0.4736867 0.6952363 -0.1581144 0.4494489</values>
+				</table>
+				<table name="back_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+				<table name="forw_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+			</curve>
+		</colouring>
+	</IFS>
+</world>

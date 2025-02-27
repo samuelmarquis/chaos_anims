@@ -4,15 +4,10 @@ import warnings
 from diffusers.utils import load_image
 import torch, os
 from shutil import copyfile
-import re
 
+from util import sorted_alphanumeric
 from ffmpeg_wrapper import ffmpeg_wrapper
 
-
-def sorted_alphanumeric(data):
-    convert = lambda text: int(text) if text.isdigit() else text.lower()
-    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
-    return sorted(data, key=alphanum_key)
 
 def calculate_overlap(overlap_len, tran_point, interp_len, path_s, path_e): #interp len must be one less than the number of new frames
     tran_start = (tran_point - overlap_len) - interp_len
@@ -23,7 +18,7 @@ def calculate_overlap(overlap_len, tran_point, interp_len, path_s, path_e): #int
     print(path_e + first)
     return last, first
 def copyrename(number, project, makevid = False):
-    #input("WARNING: ARE YOU SURE? DO YOU REALLY WANT TO COPY OVER DIFFUSION WITH CHAOTICA IMAGES?")
+    #source("WARNING: ARE YOU SURE? DO YOU REALLY WANT TO COPY OVER DIFFUSION WITH CHAOTICA IMAGES?")
     ipath = f"../../Projects/Visual/Chaotica/anims/{project}/{number}/"
     opath = f"finished_frameseqs/{project}/{number}/"
     counter = 0

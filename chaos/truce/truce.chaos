@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<world name="World">
+	<int name="format_version">2</int>
+	<IFS name="New empty world">
+		<imaging name="Imaging">
+			<int name="image_width">512</int>
+			<int name="image_height">512</int>
+			<int name="image_aa_level">2</int>
+			<int name="image_layers">1</int>
+			<string name="antialiasing_mode">strong</string>
+			<real name="brightness">4</real>
+			<vec4 name="background_colour">0 0 0.03 1</vec4>
+			<bool name="apply_bg_before_curves">false</bool>
+			<real name="flam3_gamma">3.6</real>
+			<real name="flam3_vibrancy">1</real>
+			<bool name="flam3_use_highlight_power">false</bool>
+			<real name="flam3_highlight_power">0.003</real>
+			<real name="flam3_gamma_linear_threshold">0</real>
+			<table name="layer_weights">
+				<values>1 1 1 1</values>
+			</table>
+		</imaging>
+		<real name="anim_length">10</real>
+		<real name="anim_fps">30</real>
+		<real name="anim_exposure_time">0.0333</real>
+		<string name="anim_exposure_shape">uniform</string>
+		<camera name="Camera">
+			<vec2 name="pos">0 0</vec2>
+			<real name="rotate">0</real>
+			<real name="sensor_width">4</real>
+		</camera>
+		<node name="iterators">
+			<iterator name="Iterator 1">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">0</real>
+						<real name="x_axis_length">1</real>
+						<real name="y_axis_angle">45</real>
+						<real name="y_axis_length">1</real>
+						<vec2 name="offset">-0.3825816485225505 2.0622083981337482</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">linear</string>
+							<params>
+								<real name="linear">1</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0.7361587372142822</real>
+					<real name="blend_speed">0.20725945449501856</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 2">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">135</real>
+						<real name="x_axis_length">1</real>
+						<real name="y_axis_angle">180</real>
+						<real name="y_axis_length">1</real>
+						<vec2 name="offset">2.267496111975117 1.1477449455676516</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">linear</string>
+							<params>
+								<real name="linear">0.5</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0.5248592083808035</real>
+					<real name="blend_speed">0.21481685684980342</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 3">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">-45</real>
+						<real name="x_axis_length">1</real>
+						<real name="y_axis_angle">0</real>
+						<real name="y_axis_length">1</real>
+						<vec2 name="offset">2.1244167962674965 0.6065318818040437</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">linear</string>
+							<params>
+								<real name="linear">0.25</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0.23427618737332523</real>
+					<real name="blend_speed">0.33827483220652405</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 4">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">180</real>
+						<real name="x_axis_length">1</real>
+						<real name="y_axis_angle">225</real>
+						<real name="y_axis_length">1</real>
+						<vec2 name="offset">1.52099533437014 -0.8989113530326593</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">linear</string>
+							<params>
+								<real name="linear">0.2</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0.6102371662855148</real>
+					<real name="blend_speed">0.2371589181601527</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 5">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">0</real>
+						<real name="x_axis_length">1</real>
+						<real name="y_axis_angle">90</real>
+						<real name="y_axis_length">1</real>
+						<vec2 name="offset">0 0</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">rectangles</string>
+							<params>
+								<real name="rectangles">1</real>
+								<real name="rectangles_x">1</real>
+								<real name="rectangles_y">1</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0</real>
+					<real name="blend_speed">0.5</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">80</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+		</node>
+		<colouring>
+			<curve name="hue">
+				<table name="knots">
+					<values>0.00070774334 0.16329625 0.2857143 0.44479275 0.5714286 0.71428573 0.8571429 1</values>
+				</table>
+				<table name="values">
+					<values>0.68598735 0.18917198 0.8827647 0.77006376 0.2125332 0.33559796 0.6568091 0.60971117</values>
+				</table>
+				<table name="back_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+				<table name="forw_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+			</curve>
+			<curve name="saturation">
+				<table name="knots">
+					<values>0.000707772 0.16936298 0.33437818 0.47633973 0.5916077 0.72507584 0.9022245 0.9980789</values>
+				</table>
+				<table name="values">
+					<values>0.20126583 0.08734174 0.05696204 0.094936684 0.20126583 0.026582265 0.22405066 -0.011392379</values>
+				</table>
+				<table name="back_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+				<table name="forw_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+			</curve>
+			<curve name="value">
+				<table name="knots">
+					<values>0.00070778874 0.14630942 0.2858443 0.42857146 0.5714286 0.71172905 0.8571429 0.9653185</values>
+				</table>
+				<table name="values">
+					<values>0.85700643 1.0519109 0.8226115 0.49383953 0.691699 1.006051 0.5427725 0.8684714</values>
+				</table>
+				<table name="back_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+				<table name="forw_tension">
+					<values>0 0 0 0 0 0 0 0</values>
+				</table>
+			</curve>
+		</colouring>
+	</IFS>
+</world>
