@@ -7,6 +7,7 @@ from scipy.interpolate import PchipInterpolator
 from numpy.random import default_rng
 
 flow_size = 0
+frame_rate = 0
 
 class ValCurve:
     def __init__(self, value, value2 = None, knots = None, bten = None, ften = None):
@@ -17,7 +18,7 @@ class ValCurve:
             self.value = value
         self.value2 = value2 #cannot construct w/ one value
         if knots is None:
-            knots = np.arange(0, flow_size, 1) / 30
+            knots = np.arange(0, flow_size, 1) / frame_rate
         if bten is None:
             bten = np.full(flow_size, 1)
         if ften is None:
@@ -136,13 +137,17 @@ class Flow:
     def __iter__(self):
         for flow in self.__dict__['flowdict']:
             yield flow
-def load_song(path, stem=False):
+
+def load_song(path, stem=False, fr=0):
     song, sr = librosa.load(path, sr=None)
-    fl = int(sr / 30) #remove later, update call in fractalanim
-    duration_f = int(librosa.get_duration(y=song, sr=sr) * 30)
+    song = librosa.to_mono(song)
+    fl = int(sr / fr) #remove later, update call in fractalanim
+    duration_f = int(librosa.get_duration(y=song, sr=sr) * fr)
     duration_s = int(librosa.get_duration(y=song, sr=sr))
     global flow_size
+    global frame_rate
     if stem is False:
+        frame_rate = fr
         flow_size = duration_f  # only place this should EVER be written to
     else:
         assert duration_f == flow_size #if stems aren't the same size there is a good chance of alignment issues
@@ -154,9 +159,7 @@ def load_song(path, stem=False):
 
 def compute_flows(song, sr):
     global flow_size
-
-
-    fl = int(sr / 30)
+    fl = int(sr / frame_rate)
 
     #more chroma features?
     #rms frequency??

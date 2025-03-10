@@ -12,12 +12,19 @@ def mask(source_dir, mask_dir, size):
         image.resize((size,size))
         a = np.array(image.convert('RGB'))
 
-        lower_bound = np.array([128, 0, 0])
-        upper_bound = np.array([255, 255, 255])
+        lb = np.array([0, 0, 0])
+        lmb = np.array([10, 10, 10])
+        umb = np.array([0, 0, 0])
+        ub = np.array([0, 0, 0])
 
-        mask = np.all((a >= lower_bound) & (a <= upper_bound), axis=2)
-        a[mask] = [255, 0, 0]
-        a[~mask] = [0,0,0]
+        mask1 = np.all((a < lmb), axis=2)
+        #mask2 = np.all((a >= lmb) & (a <= umb), axis=2)
+        #mask3 = np.all((a > umb), axis=2)
+
+        a[mask1] = [255, 255, 255]
+        a[~mask1] = [0, 0, 0]
+        #a[mask2] = [0, 0, 0]
+        #a[mask3] = [255, 255, 255]
 
         Image.fromarray(a).save(f"{mask_dir}/{f}")
         n += 1

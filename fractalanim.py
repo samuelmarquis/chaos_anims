@@ -8,16 +8,16 @@ np.set_printoptions(threshold=sys.maxsize)
 
 from projects.scream.section11 import *
 
-audio_name = f"{name}_{number}"
+audio_name = f"{number}"
 
-song, sr, _, duration_f, duration_s = load_song(f"{audioroot}/{audio_name}.wav")
+song, sr, _, duration_f, duration_s = load_song(f"{audioroot}/{audio_name}s.wav", fr=fr)
 flows = compute_flows(song, sr)
 print(f"Computed flows for {audio_name}")
 
 stems = []
 sflows = {}
 for s in stem_suf:
-    sflows[s] = compute_flows(load_song(f"{audioroot}/{audio_name}{s}.wav", stem=True)[0], sr)
+    sflows[s] = compute_flows(load_song(f"{audioroot}/{audio_name}{s}.wav", stem=True, fr=fr)[0], sr)
     print(f" - Computed flows for stem: {audio_name}{s}")
 
 print("Finished computing stem-flows.")

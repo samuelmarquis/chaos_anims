@@ -62,4 +62,3 @@ for f in os.listdir('finished_frameseqs/old/scream_4'):
         image = load_image(f"finished_frameseqs/scream_4text/{othercounter}.png")
         image.save(f"finished_frameseqs/scream_4t/{str(counter).zfill(5)}.png")
     counter += 1
-
