@@ -15,7 +15,7 @@
 			<real name="flam3_vibrancy">1</real>
 			<bool name="flam3_use_highlight_power">true</bool>
 			<real name="flam3_highlight_power">4</real>
-			<real name="flam3_gamma_linear_threshold">0.1</real>
+			<real name="flam3_gamma_linear_threshold">0.2</real>
 			<curves>
 				<curve name="overall">
 					<table name="knots">

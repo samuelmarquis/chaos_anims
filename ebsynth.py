@@ -23,8 +23,8 @@ def ebsynth_wrapper(style_dir, style_mask_dir, guide_mask_dir, output_dir):
 
 
 if __name__ == '__main__':
-    base = "scream1"
-    sub = "a_"  # Don't forget the _
+    base = "scream2"
+    sub = ""  # Don't forget the _
     full = f"{base}{sub}"
     ebsynth_wrapper(f"vid_pipe/{base}/style",
                     f"vid_pipe/{base}/style_masks",

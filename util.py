@@ -20,6 +20,20 @@ def saturate(x, hardness=1, center=0.5):
     b = hardness * center
     return (np.tanh(a*x - b) + 1) / 2
 
+def channel_saturate(a, h=None, c=None):
+    if h is None:
+        ha = [1, 1, 1]
+    if c is None:
+        c = [0.5, 0.5, 0.5]
+
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+
+    r_new = (np.tanh(h[0] * (r - c[0])) + 1) / 2
+    g_new = (np.tanh(h[1] * (g - c[1])) + 1) / 2
+    b_new = (np.tanh(h[2] * (b - c[2])) + 1) / 2
+
+    return np.stack([r_new, g_new, b_new], axis=2)
+
 def grad_map(a, left=None, right=None):
     if left is None:
         left = [0, 0, 0]

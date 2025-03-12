@@ -25,27 +25,22 @@ def download_and_extract(url, output_dir, name):
 
 
 def process_json(json_input):
-
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-    # Parse JSON
     data = json.loads(json_input)
 
-    # Download and extract masks
     masks_url = data["masks"]["url"]
-    print(f"Processing masks from {masks_url}")
+    print(f"Downloading & extracting masks")
     download_and_extract(masks_url, OUTPUT_DIR, "masks")
 
-    # Download and extract confidences
+
     confidences_url = data["confidences"]["url"]
-    print(f"Processing confidences from {confidences_url}")
+    print(f"Downloading & extracting confidences")
     download_and_extract(confidences_url, OUTPUT_DIR, "confidences")
 
     print(f"Files extracted to {OUTPUT_DIR}")
 
-
-def main():
-    print("Please paste your JSON input below (press Enter twice when done):")
+if __name__ == "__main__":
+    print("Paste JSON, double tap enter")
 
     # Collect multi-line input
     lines = []
@@ -62,7 +57,3 @@ def main():
         process_json(json_input)
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-
-
-if __name__ == "__main__":
-    main()

@@ -4,41 +4,63 @@ import numpy as np
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
-from util import saturate, grad_map, read_image, write_image
+from util import saturate, grad_map, read_image, write_image, channel_saturate
 
 
 def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     mask_colors = np.array([
-        [0, 0, 0],  # Water & BG
-        [0, 38, 89],  # Earth
-        [0, 38, 89],  # Platform
-        [45, 48, 40],  # Pants
-        [255, 255, 255],  # Jacket
-        [40, 44, 48],  # Shirt
-        [0.5,0.75,1],  # Hands
-        [0, 0, 1],  # Face
-        [40, 40, 40],  # Hair
-        ]) / 255.0
-
+        # water
+        [0, 1, 0.5],
+        # concrete
+        [0.6, 0.5, 0.7],
+        # railing
+        [0, 0, 0],
+        # hill
+        [0.6, 0.7, 0.4],
+        # treeline lower
+        [0.7, 0.8, 0.5],
+        # treeline upper
+        [0.8, 0.9, 0.6],
+        # sky
+        [0, 1, 1],
+        # dasha jacket & hat
+        [1.0, 0.0, 1],
+        # dasha pants
+        [0.8, 0.6, 0.8],
+        # dasha hair
+        [1, 1, 1],
+        # dasha skin
+        [0.9, 0.8, 0.7],
+        # sam jacket
+        [1, 1, 1],
+        # guitar
+        [0.8, 0.5, 0.5],
+        # sam pants and shirt
+        [0, 0, 0],
+        # sam skin
+        [0.35, 1, 0.3],
+        # sam hair
+        [0.5, 0.5, 1],
+        ])
+    sat_h = [8,10,12]
+    sat_c = [0.5,0.5,0.5]
     maps = [
-        # Water & BG
-        lambda a, c, cnf, msk : np.where(msk > 0, c * cnf, a),
-        # Earth
-        lambda a, c, cnf, msk : np.where(msk > 0, c * cnf, a),
-        # Platform
-        lambda a, c, cnf, msk: np.where(msk > 0, saturate(a * c, 4, 0.5), a),
-        # Pants
-        lambda a, c, cnf, msk: np.where(msk > 0, c * cnf, a),
-        # Jacket
-        lambda a, c, cnf, msk: np.where(msk > 0, c * cnf, a),
-        # Shirt
-        lambda a, c, cnf, msk: np.where(msk > 0, c * cnf, a),
-        # Hands
-        lambda a, c, cnf, msk: np.where(msk > 0, saturate(a * c, 6, 0.25), a),
-        # Face
-        lambda a, c, cnf, msk: np.where(msk > 0, grad_map(saturate(a, 30, 0.4), [0,0,0],[0.5,0.75,1]), a),
-        # Hair
-        lambda a, c, cnf, msk: np.where(msk > 0, c * cnf, a)
+        lambda a, c, cnf, msk: np.where(msk > 0, a * c, a),
+        lambda a, c, cnf, msk: channel_saturate(a, [14, 12, 16], [0.6, 0.57, 0.5]),
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: np.where(msk > 0, a * c, a),
+        lambda a, c, cnf, msk: np.where(msk > 0, a * c, a),
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: a,
     ]
 
     def frame(nf):
@@ -120,9 +142,9 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
 
 
 if __name__ == '__main__':
-    base = "scream1"
-    sub = "a"
+    base = "scream2"
+    sub = ""
     full = f"vid_pipe/{base}/{sub}"
-    merge_masks(f"{full}_src_frames",
-                f"{full}_sieve",
-                f"{full}_masks", 9)
+    merge_masks(f"{full}src_frames",
+                f"{full}sieve",
+                f"{full}masks", 16)
