@@ -1,68 +1,65 @@
 import os
+from time import sleep
 from PIL import Image
 from util import sorted_alphanumeric
 from video_editor import crop_framesplit
-from segment import segment_bw, segment_anything
+#from segment import segment_bw, segment_anything
+from sieve_to_mask import merge_masks
 from fractal_mask import mask
 from ebsynth import ebsynth_wrapper
 from ffmpeg_wrapper import ffmpeg_wrapper
 from os import makedirs
-
-skip_to = 5
+from concurrent.futures import ProcessPoolExecutor
+from functools import partial
+from multiprocessing import Process
 
 pname = "scream"
-pidx = 11
-#input_vid = "source_video/02.28/IMG_9592.MP4"
-style_dir = f"finished_frameseqs/{pname}/{pidx}"
+pidx = 1
+suff = ['a','b','c']
 
 base = "vid_pipe"
 name = f"{pname}{pidx}"
 pdir = f"{base}/{name}"
-audio_name = f"audio/{pname}/{pname}_{pidx}s.wav"
+
+audio_name = f"audio/{pname}/{pidx}s.wav"
 res = 1024
 
-makedirs(f"{pdir}/src_frames", exist_ok=True)
-makedirs(f"{pdir}/masks", exist_ok=True)
-makedirs(f"{pdir}/style", exist_ok=True)
-makedirs(f"{pdir}/style_masks", exist_ok=True)
-makedirs(f"{pdir}/output", exist_ok=True)
-
-# STEP 1: src video -> square-cropped frame sequences
-#if skip_to <= 1:
-#    print("Splitting frames")
-#    crop_framesplit(f"{input_vid}", f"{pdir}/src_frames", 512)
-
-# STEP 2: resize style
-#if skip_to <= 2:
-#    print("Resizing style")
-#    for f in sorted_alphanumeric(os.listdir(style_dir)):
-#        Image.open(f"{style_dir}/{f}").resize((512,512)).save(f"{pdir}/style/{f}")
-
-
-# STEP 3: source frames -> source mask
-if skip_to <= 3:
-    print("Segmenting source")
-    segment_anything(f"{pdir}/src_frames", f"{pdir}/masks", 512)
-
-# STEP 4: style frames -> style mask
-if skip_to <= 4:
-    print("Masking style")
-    mask(f"{pdir}/style", f"{pdir}/style_masks", 1024)
-
-# STEP 5: ebsynth :: style frames -> style masks -> source masks -> output frames
-if skip_to <= 5:
-    print("Running ebsynth")
+def do_it(s):
+    flatten = partial(merge_masks,f"{pdir}/{s}_src_frames", f"{pdir}/{s}_sieve", f"{pdir}/{s}_masks", 9)
+    proc = Process(target=flatten)
+    proc.start()
+    sleep(10)
     ebsynth_wrapper(f"{pdir}/style",
-                    f"{pdir}/style_masks",
-                    f"{pdir}/masks",
-                    f"{pdir}/output")
+                    f"{pdir}/style",
+                    f"{pdir}/{s}_masks",
+                    f"{pdir}/{s}_output")
+    return s
 
-#n = 0
-#for f in sorted_alphanumeric(os.listdir(f"{pdir}/bad_out")):
-#    image = Image.open(f"{pdir}/bad_out/{f}").save(f"{pdir}/output/{n:05}.png")
-#    n += 1
+if __name__ == "__main__":
+    makedirs(f"{pdir}/style", exist_ok=True)
+    makedirs(f"{pdir}/style_masks", exist_ok=True)
 
-# STEP 6: output frames -> video
-if skip_to <= 6:
-    print("Running ffmpeg")
-    ffmpeg_wrapper(f"{pdir}/output", audio_name, f"{name}")
+    if suff is None:
+        makedirs(f"{pdir}/src_frames", exist_ok=True)
+        makedirs(f"{pdir}/masks", exist_ok=True)
+        makedirs(f"{pdir}/output", exist_ok=True)
+        makedirs(f"{pdir}/sieve", exist_ok=True)
+
+    else:
+        for s in suff:
+            makedirs(f"{pdir}/{s}_src_frames", exist_ok=True)
+            makedirs(f"{pdir}/{s}_masks", exist_ok=True)
+            makedirs(f"{pdir}/{s}_output", exist_ok=True)
+            makedirs(f"{pdir}/{s}_sieve", exist_ok=True)
+
+    needed = ['a', 'b', 'c']
+
+    with ProcessPoolExecutor() as pool:
+        for s in pool.map(do_it, needed):
+            print(f"Finished {name}{s}")
+            ffmpeg_wrapper(f"{pdir}/{s}_output",
+                           audio_name,
+                           f"{pname}{pidx}{s}_5",
+                           framerate=24,
+                           pattern="%05d",
+                           comp_rat=20)

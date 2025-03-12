@@ -2,28 +2,29 @@ from .screamproject import *
 from parameters import *
 
 number = 1
-stem_suf = ['v','p','k','i','b']
+stem_suf = ['k']
 
 flamepath = f"{chaosroot}/{number}.chaos"
-# it2 powx/powy deviate slightly around 1
+# palate locations: 0,.4, and then 0-1 for the other 2
 # it2 xlen/ylen deviate slightly around 1
 # it1 offset stay in (0, 0) to (0.25,-0.25)
 #blur between 0.1 and 0.001
 def animate(iterators, flows, sflows):
-    vflows = sflows["v"]
-    pflows = sflows["p"]
+
     kflows = sflows["k"]
-    iflows = sflows["i"]
-    bflows = sflows["b"]
+
     v0 = ValCurve(0)
+    # Camera:
     # Iterator 1:
-    iterators[0].offset = pol2car(kflows.rms, vflows.colorwheel)
     # Iterator 2:
-    iterators[1].x_axis_length = flows.lf * 0.2 + 0.9
-    iterators[1].y_axis_length = flows.lf * 0.2 + 0.9
-    iterators[1].linearT_powX = bflows.rms * 0.2 + 0.9
-    iterators[1].linearT_powY = bflows.rms * 0.2 + 0.9
+    iterators[2].x_axis_angle =  gatescaler(kflows.rms, isangle=True)
+    iterators[2].x_axis_length = flows.lm*2 + 0.2
     # Iterator 3:
-    iterators[2].pre_blur = (iflows.majcorr * 0.1) ** 2
+    iterators[3].x_axis_length = ((flows.colorwheel ** 0.1) * 2 - 1) + 0.1
+    iterators[3].palette_index = flows.rms ** 1.2
     # Iterator 4:
-    iterators[3].Base_weight = iflows.rms ** 4
+    iterators[4].palette_index = kflows.rms
+    # Iterator 5:
+    iterators[5].y_axis_angle = gatescaler(flows.lf, isangle=True)
+    iterators[5].y_axis_length = flows.hm*2 + 0.2
+    iterators[5].palette_index =  flows.lf ** 1.2
