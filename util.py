@@ -42,6 +42,8 @@ def grad_map(a, left=None, right=None):
 
 def read_image(path):
     a = cv2.imread(path, cv2.IMREAD_COLOR_RGB)
+    if a is None:
+        return None
     a = a[..., ::-1].astype(np.float32) / 255.0
     return a
 

@@ -6,10 +6,9 @@ import os
 
 # Thanks Grok
 
-# Hardcoded constants
-PATH_BASE = "vid_pipe/scream1b"
-FRAME_INDEX = 20
-IMAGE_PATH = f"{PATH_BASE}/src_frames/{FRAME_INDEX:05d}.png"  # Replace with your image path
+PATH_BASE = "vid_pipe/scream2"
+FRAME_INDEX = 40
+IMAGE_PATH = f"{PATH_BASE}/src_frames/{FRAME_INDEX:05d}.png"
 ANN_PATH = f"{PATH_BASE}/annotations.json"
 
 class ImageAnnotator:
@@ -17,14 +16,12 @@ class ImageAnnotator:
         self.root = root
         self.root.title("Image Annotator")
 
-        # Load and display image
         self.original_image = Image.open(IMAGE_PATH)
         self.tk_image = ImageTk.PhotoImage(self.original_image)
         self.canvas = tk.Canvas(root, width=800, height=600)
         self.canvas.pack(fill="both", expand=True)
         self.image_id = self.canvas.create_image(0, 0, anchor="nw", image=self.tk_image)
 
-        # State variables
         self.scale = 1.0
         self.pan_x = 0
         self.pan_y = 0
@@ -32,12 +29,10 @@ class ImageAnnotator:
         self.drag_start_y = 0
         self.current_object_id = 1
 
-        # Data storage
         self.annotations = {}  # {object_id: {"points": [], "labels": []}}
-        self.circles = []  # For displayed circles
-        self.history = []  # For undo functionality
+        self.circles = []
+        self.history = []
 
-        # Bind events
         self.canvas.bind("<Button-2>", self.start_pan)  # Middle click
         self.canvas.bind("<B2-Motion>", self.do_pan)
         self.canvas.bind("<Button-1>", self.add_blue_point)  # Left click
@@ -61,7 +56,6 @@ class ImageAnnotator:
             self.canvas.tag_lower(self.image_id, circle)
 
     def load_image(self):
-        # Open file picker dialog for image files
         file_path = filedialog.askopenfilename(
             title="Select Image",
             filetypes=[("PNG files", "*.png"), ("All files", "*.*")]
@@ -69,22 +63,19 @@ class ImageAnnotator:
         if not file_path:
             return
 
-        # Load new image
         self.original_image = Image.open(file_path)
         self.tk_image = ImageTk.PhotoImage(self.original_image)
         self.canvas.delete(self.image_id)
         self.image_id = self.canvas.create_image(self.pan_x, self.pan_y, anchor="nw", image=self.tk_image)
 
-        # Update FRAME_INDEX from filename (assuming format like '00005.png')
         basename = os.path.basename(file_path)
-        frame_num = os.path.splitext(basename)[0]  # Remove extension
+        frame_num = os.path.splitext(basename)[0]
         try:
-            self.FRAME_INDEX = int(frame_num)  # Convert to integer, removing leading zeros
+            self.FRAME_INDEX = int(frame_num)
         except ValueError:
-            self.FRAME_INDEX = 0  # Default if filename doesn't match expected format
+            self.FRAME_INDEX = 0
 
     def load_json(self):
-        # Open file picker dialog for JSON files
         file_path = filedialog.askopenfilename(
             title="Select JSON File",
             filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
@@ -92,18 +83,15 @@ class ImageAnnotator:
         if not file_path:
             return
 
-        # Load and parse JSON
         with open(file_path, 'r') as f:
             data = json.load(f)
 
-        # Clear existing annotations
         self.annotations.clear()
         self.history.clear()
         for circle in self.circles:
             self.canvas.delete(circle)
         self.circles.clear()
 
-        # Populate annotations from JSON
         for entry in data:
             object_id = entry["object_id"]
             self.annotations[object_id] = {
@@ -111,13 +99,11 @@ class ImageAnnotator:
                 "labels": entry["labels"]
             }
 
-        # Set current_object_id to the highest loaded ID + 1
         if self.annotations:
             self.current_object_id = max(self.annotations.keys()) + 1
         else:
             self.current_object_id = 1
 
-        # Update display for current object
         self.update_circles()
 
         # Reset view

@@ -14,8 +14,8 @@ from functools import partial
 from multiprocessing import Process
 
 pname = "scream"
-pidx = 1
-suff = ['a','b','c']
+pidx = 2
+suff = None
 
 base = "vid_pipe"
 name = f"{pname}{pidx}"

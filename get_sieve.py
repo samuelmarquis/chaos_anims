@@ -5,34 +5,27 @@ import shutil
 import zipfile
 from os import makedirs
 import sieve_to_mask
-# Hard-coded directory to save files
-OUTPUT_DIR = "vid_pipe/scream1c/sieve"  # Change this to your desired path
 
+OUTPUT_DIR = "vid_pipe/scream2/sieve"
 
 def download_and_extract(url, output_dir, name):
-    """Download a zip file from URL and extract it to output_dir"""
-    # Get filename from URL (removing query parameters)
     filename = url.split('/')[-1].split('?')[0]
     filepath = os.path.join(output_dir, filename)
 
-    # Download the file
     response = requests.get(url)
     with open(filepath, 'wb') as f:
         f.write(response.content)
 
 
     makedirs(f"{output_dir}/{name}", exist_ok=True)
-    # Extract the zip
     with zipfile.ZipFile(filepath, 'r') as zip_ref:
         zip_ref.extractall(f"{output_dir}/{name}")
 
-    # Clean up the zip file
     os.remove(filepath)
 
 
 def process_json(json_input):
-    """Process the JSON and handle the downloads"""
-    # Ensure output directory exists
+
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # Parse JSON
