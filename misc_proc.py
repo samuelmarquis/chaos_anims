@@ -29,10 +29,10 @@ def concat():
             n += 1
 
 def map_folder():
-    for n,s in enumerate(listdir("vid_pipe/scream3/style/")):
-        s = read_image2(f"vid_pipe/scream3/style/{s}")
-        a = grad_map(s * 1.1 - 0.1, [0,0,0],[1,1,1])
-        write_image(f"vid_pipe/scream3/style_masks/{n}.png", a)
+    for n,s in enumerate(listdir("vid_pipe/scream3/src_frames/")):
+        s = read_image2(f"vid_pipe/scream3/src_frames/{s}")
+        a = channel_saturate(s, [])
+        write_image(f"vid_pipe/scream3/style_masks/{n:05d}.png", a)
         if n%50==0 and n>0:
             print(f"Processed {n} images")
 

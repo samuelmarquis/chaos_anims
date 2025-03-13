@@ -4,59 +4,34 @@ import numpy as np
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
-from util import saturate, grad_map, read_image, write_image, channel_saturate, noise
+from util import saturate, grad_map, read_image, write_image, channel_saturate, noise, read_image2
 
 
 def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     mask_colors = np.array([
-        # water
-        [0, 1, 0.5],
-        # concrete
-        [0.6, 0.5, 0.7],
-        # railing
-        [0, 0, 0],
-        # hill
-        [0.6, 0.7, 0.4],
-        # treeline lower
-        [0.7, 0.8, 0.5],
-        # treeline upper
-        [0.8, 0.9, 0.6],
-        # sky
-        [1, 0.6, 1],
-        # dasha jacket & hat
-        [1.0, 0.0, 1],
-        # dasha pants
-        [0.8, 0.6, 0.8],
-        # dasha hair
-        [1, 1, 1],
-        # dasha skin
-        [0.9, 0.8, 0.7],
-        # sam jacket
-        [1, 1, 1],
-        # guitar
-        [0.8, 0.5, 0.5],
-        # sam pants and shirt
-        [0, 0, 0],
-        # sam skin
-        [0.35, 1, 0.3],
-        # sam hair
-        [0.5, 0.5, 1],
+        [1, 1, 0],# bg
+        [0, 0, 1],# jacket
+        [0, 1, 0],# shirt
+        [0, 0, 1],# skin
+        [1, 0, 0],# hair
+        [1, 0, 1],# treeline
+        [0, 0, 1],# sky
         ])
     sat_h = [8,10,12]
     sat_c = [0.5,0.5,0.5]
     maps = [
-        lambda a, c, cnf, msk: np.where (msk > 0, a*c, noise(saturate(grad_map(a), 2,0.85), 0.3)),  # bg
-        lambda a, c, cnf, msk: a,  # jacket
-        lambda a, c, cnf, msk: a,  # shirt
-        lambda a, c, cnf, msk: a,  # skin
-        lambda a, c, cnf, msk: a,  # hair
-        lambda a, c, cnf, msk: a,  # treeline
-        lambda a, c, cnf, msk: a,  # sky
+        lambda a, c, cnf, msk: np.where (msk > 0, a*c*1.2, a),  # bg
+        lambda a, c, cnf, msk: np.where (msk > 0, a*c*1.2, a),  # jacket
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # shirt
+        lambda a, c, cnf, msk: np.where (msk > 0, grad_map(saturate(a, 12, 0.3), [1,0,0], [0,0,1]), a),  # skin
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # hair
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # treeline
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # sky
     ]
 
     def frame(nf):
         n, f = nf
-        a = read_image(f"{src_dir}/{f}")
+        a = read_image2(f"{src_dir}/{f}")
         if a is None:
             print(f"Missing {f}")
             return n
@@ -73,8 +48,8 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
         return n
 
     def layer(n, m):
-        cnf = read_image(f"{sieve_dir}/confidences/confidences_{n}_{m}.png")
-        msk = read_image(f"{sieve_dir}/masks/mask_{n}_{m}.png")
+        cnf = read_image2(f"{sieve_dir}/confidences/confidences_{n}_{m}.png")
+        msk = read_image2(f"{sieve_dir}/masks/mask_{n}_{m}.png")
         if cnf is None or msk is None:
             return None
         return cnf, msk
@@ -138,4 +113,4 @@ if __name__ == '__main__':
     full = f"vid_pipe/{base}/{sub}"
     merge_masks(f"{full}src_frames",
                 f"{full}sieve",
-                f"{full}masks", 16)
+                f"{full}masks2", 7)
