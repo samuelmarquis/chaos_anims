@@ -8,21 +8,51 @@
 			<int name="image_aa_level">2</int>
 			<int name="image_layers">1</int>
 			<string name="antialiasing_mode">strong</string>
-			<real name="brightness">10</real>
-			<vec4 name="background_colour">1 1 1 1</vec4>
+			<real name="brightness">20</real>
+			<vec4 name="background_colour">0.3 0.3 0.3 1</vec4>
 			<bool name="apply_bg_before_curves">false</bool>
-			<real name="flam3_gamma">400</real>
-			<real name="flam3_vibrancy">1.4</real>
+			<real name="flam3_gamma">40</real>
+			<real name="flam3_vibrancy">1.5</real>
 			<bool name="flam3_use_highlight_power">true</bool>
 			<real name="flam3_highlight_power">16</real>
-			<real name="flam3_gamma_linear_threshold">0.2</real>
+			<real name="flam3_gamma_linear_threshold">0.4</real>
+			<curves>
+				<curve name="0">
+					<table name="knots">
+						<values>0 0.25 0.48857105 0.68500376 1</values>
+					</table>
+					<table name="values">
+						<values>0 0.25 0.9799019 0.98844254 1</values>
+					</table>
+					<table name="back_tension">
+						<values>1 0 0 0 1</values>
+					</table>
+					<table name="forw_tension">
+						<values>1 0 0 0 1</values>
+					</table>
+				</curve>
+				<curve name="5">
+					<table name="knots">
+						<values>0 0.3006788 0.49711156 0.68500376 1</values>
+					</table>
+					<table name="values">
+						<values>0 0.41622525 0.98844254 1.0653075 1</values>
+					</table>
+					<table name="back_tension">
+						<values>1 0 0 0 1</values>
+					</table>
+					<table name="forw_tension">
+						<values>1 0 0 0 1</values>
+					</table>
+				</curve>
+			</curves>
 			<table name="layer_weights">
 				<values>1 1 1 1</values>
 			</table>
 		</imaging>
 		<real name="anim_length">13</real>
 		<real name="anim_fps">30</real>
-		<real name="anim_exposure_time">0.0333</real>
+		<real name="anim_exposure_time">0.10329999999999999</real>
 		<string name="anim_exposure_shape">uniform</string>
 		<camera name="Camera">
 			<vec2 name="pos">0 0</vec2>
@@ -44,21 +74,10 @@
 					<vec2 name="offset">0 1</vec2>
 				</affine2>
 				<node name="transforms">
-					<flam3_variation name="post_smartcrop">
-						<string name="variation_name">post_smartcrop</string>
+					<flam3_variation name="linear">
+						<string name="variation_name">linear</string>
 						<params>
-							<real name="post_smartcrop">1</real>
-							<real name="post_scrop_power">2</real>
-							<real name="post_scrop_radius">1</real>
-							<real name="post_scrop_roundstr">1</real>
-							<real name="post_scrop_roundwidth">4</real>
-							<real name="post_scrop_distortion">1</real>
-							<real name="post_scrop_edge">0</real>
-							<real name="post_scrop_scatter">0</real>
-							<real name="post_scrop_offset">0</real>
-							<real name="post_scrop_rotation">0</real>
-							<real name="post_scrop_cropmode">1</real>
-							<real name="post_scrop_static">2</real>
+							<real name="linear">1</real>
 						</params>
 					</flam3_variation>
 				</node>
@@ -129,8 +148,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.4806283584330231</real>
-					<real name="blend_speed">0.05419339639598903</real>
+					<real name="palette_index">0.35479555116035044</real>
+					<real name="blend_speed">0.35099059921228803</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>
@@ -221,8 +240,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.05228250450454652</real>
-					<real name="blend_speed">0.17442045959487035</real>
+					<real name="palette_index">0.896972534712404</real>
+					<real name="blend_speed">0.01614096499702027</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>
@@ -330,8 +349,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.8070282558910549</real>
-					<real name="blend_speed">0.5034789817869197</real>
+					<real name="palette_index">0.6663640514016151</real>
+					<real name="blend_speed">0.1636948823877664</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>
@@ -351,16 +370,16 @@
 		<colouring>
 			<curve name="hue">
 				<table name="knots">
-					<values>0.006497593 1</values>
+					<values>0.0025056244 0.4494305 0.5410022 1</values>
 				</table>
 				<table name="values">
-					<values>0.5021739 0.791183</values>
+					<values>-0.36043167 0.07122301 0.18345323 0.791183</values>
 				</table>
 				<table name="back_tension">
-					<values>0 0</values>
+					<values>0 0 0 0</values>
 				</table>
 				<table name="forw_tension">
-					<values>0 0</values>
+					<values>0 0 0 0</values>
 				</table>
 			</curve>
 			<curve name="saturation">

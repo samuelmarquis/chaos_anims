@@ -45,22 +45,13 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     sat_h = [8,10,12]
     sat_c = [0.5,0.5,0.5]
     maps = [
-        lambda a, c, cnf, msk: np.where (msk > 0, a*c, noise(saturate(grad_map(a), 2,0.85), 0.3)),  # water
-        lambda a, c, cnf, msk: a,  # concrete
-        lambda a, c, cnf, msk: a,  # railing
-        lambda a, c, cnf, msk: a,  # hill
-        lambda a, c, cnf, msk: a,  # treeline lower
-        lambda a, c, cnf, msk: a,  # treeline upper
+        lambda a, c, cnf, msk: np.where (msk > 0, a*c, noise(saturate(grad_map(a), 2,0.85), 0.3)),  # bg
+        lambda a, c, cnf, msk: a,  # jacket
+        lambda a, c, cnf, msk: a,  # shirt
+        lambda a, c, cnf, msk: a,  # skin
+        lambda a, c, cnf, msk: a,  # hair
+        lambda a, c, cnf, msk: a,  # treeline
         lambda a, c, cnf, msk: a,  # sky
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a), # dasha pants
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # dasha pants
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # dasha hair
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # dasha skin
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam jacket
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # guitar
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam pants and shirt
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam skin
-        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam hair
     ]
 
     def frame(nf):
@@ -142,7 +133,7 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
 
 
 if __name__ == '__main__':
-    base = "scream2"
+    base = "scream3"
     sub = ""
     full = f"vid_pipe/{base}/{sub}"
     merge_masks(f"{full}src_frames",

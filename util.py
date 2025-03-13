@@ -67,9 +67,16 @@ def read_image(path):
     a = a[..., ::-1].astype(np.float32) / 255.0
     return a
 
+def read_image2(path):
+    a = cv2.imread(path, cv2.IMREAD_COLOR_RGB).astype(np.float32) / 255.0
+    return a
+
 def write_image(path, img):
-    #img = np.clip(img[..., ::-1] * 255.0, 0, 255).astype(np.uint8)
-    img = (img * 255.0).astype(np.uint8)
+    img = np.clip(img[..., ::-1] * 255.0, 0, 255).astype(np.uint8)
+    cv2.imwrite(path, img)
+
+def write_image2(path, img):
+    img = np.clip(img * 255.0, 0,255).astype(np.uint8)
     cv2.imwrite(path, img)
 
 def edge_detect(a, sh=4):

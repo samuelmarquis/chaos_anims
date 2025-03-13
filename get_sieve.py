@@ -6,7 +6,7 @@ import zipfile
 from os import makedirs
 import sieve_to_mask
 
-OUTPUT_DIR = "vid_pipe/scream2/sieve_broad"
+OUTPUT_DIR = "vid_pipe/scream3/sieve"
 
 def download_and_extract(url, output_dir, name):
     filename = url.split('/')[-1].split('?')[0]
