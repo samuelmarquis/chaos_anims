@@ -27,6 +27,6 @@ if __name__ == '__main__':
     sub = ""  # Don't forget the _
     full = f"{base}{sub}"
     ebsynth_wrapper(f"vid_pipe/{base}/style",
-                    f"vid_pipe/{base}/style_masks",
-                    f"vid_pipe/{base}/{sub}masks",
-                    f"vid_pipe/{base}/{sub}output")
+                    f"vid_pipe/{base}/style_masks3",
+                    f"vid_pipe/{base}/depth",
+                    f"vid_pipe/{base}/{sub}test_out4")

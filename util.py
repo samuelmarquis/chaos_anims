@@ -54,6 +54,12 @@ def grad_map(a, left=None, right=None):
 
     return np.stack([r_new, g_new, b_new], axis=2)
 
+def noise(a, l=0.1, tint=None):
+    if tint is None:
+        tint = [1,1,1]
+    n = (np.random.rand(a.shape[0], a.shape[1], a.shape[2])* tint)*2-1
+    return a+n*l
+
 def read_image(path):
     a = cv2.imread(path, cv2.IMREAD_COLOR_RGB)
     if a is None:
@@ -62,10 +68,21 @@ def read_image(path):
     return a
 
 def write_image(path, img):
-    img = np.clip(img[..., ::-1] * 255.0, 0, 255).astype(np.uint8)
+    #img = np.clip(img[..., ::-1] * 255.0, 0, 255).astype(np.uint8)
+    img = (img * 255.0).astype(np.uint8)
     cv2.imwrite(path, img)
 
+def edge_detect(a, sh=4):
+    cb = False
+    if a.dtype == np.float32:
+        cb = True
+        a = (a*255.0).astype(np.uint8)
+    e = ~(a ^ (np.roll(~a, shift=sh, axis=0) | np.roll(~a, shift=sh, axis=1) | np.roll(~a, shift=-sh, axis=0) | np.roll(~a, shift=-sh, axis=1)))
+    if cb:
+        return np.clip(e,0,1).astype(np.float32)
+    return e
+
 if __name__ == '__main__':
-    a = read_image(f"vid_pipe/scream1/a_src_frames/00015.png")
-    a = (grad_map(saturate(a, 30, 0.40), [0,1,1], [1,0,1]))
-    write_image("test.png", a)
+    nn = read_image(f"vid_pipe/scream1/a_src_frames/00015.png")
+    nn = noise(nn, 1)
+    write_image("test.png", nn)

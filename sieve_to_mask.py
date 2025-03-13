@@ -4,7 +4,7 @@ import numpy as np
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 
-from util import saturate, grad_map, read_image, write_image, channel_saturate
+from util import saturate, grad_map, read_image, write_image, channel_saturate, noise
 
 
 def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
@@ -22,7 +22,7 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
         # treeline upper
         [0.8, 0.9, 0.6],
         # sky
-        [0, 1, 1],
+        [1, 0.6, 1],
         # dasha jacket & hat
         [1.0, 0.0, 1],
         # dasha pants
@@ -45,22 +45,22 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     sat_h = [8,10,12]
     sat_c = [0.5,0.5,0.5]
     maps = [
-        lambda a, c, cnf, msk: np.where(msk > 0, a * c, a),
-        lambda a, c, cnf, msk: channel_saturate(a, [14, 12, 16], [0.6, 0.57, 0.5]),
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: np.where(msk > 0, a * c, a),
-        lambda a, c, cnf, msk: np.where(msk > 0, a * c, a),
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
-        lambda a, c, cnf, msk: a,
+        lambda a, c, cnf, msk: np.where (msk > 0, a*c, noise(saturate(grad_map(a), 2,0.85), 0.3)),  # water
+        lambda a, c, cnf, msk: a,  # concrete
+        lambda a, c, cnf, msk: a,  # railing
+        lambda a, c, cnf, msk: a,  # hill
+        lambda a, c, cnf, msk: a,  # treeline lower
+        lambda a, c, cnf, msk: a,  # treeline upper
+        lambda a, c, cnf, msk: a,  # sky
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a), # dasha pants
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # dasha pants
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # dasha hair
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # dasha skin
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam jacket
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # guitar
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam pants and shirt
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam skin
+        lambda a, c, cnf, msk: np.where(msk > 0, [1,1,1], a),  # sam hair
     ]
 
     def frame(nf):

@@ -19,7 +19,7 @@ def ffmpeg_wrapper(frameseq_dir, audio_name, output_name, framerate=0, pattern="
     subprocess.run(args, shell=True)
 
 if __name__ == '__main__':
-    outfile = "scream2_2"
+    outfile = "scream2_9a"
     if exists(f"media/{outfile}.mp4"):
         print(f"WARNING: DO YOU REALLY WANT TO OVERWRITE {outfile}.mp4")
         d = input("ENTER '!x' TO OVERWRITE\n")
@@ -27,7 +27,7 @@ if __name__ == '__main__':
             print("ABORTING")
             exit(1)
 
-    ffmpeg_wrapper('vid_pipe/scream2/output',
+    ffmpeg_wrapper('vid_pipe/scream2/test_out',
                    'audio/scream/2s.wav',
                    outfile,
                    framerate=24,
