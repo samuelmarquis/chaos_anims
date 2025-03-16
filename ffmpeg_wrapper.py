@@ -21,7 +21,7 @@ def ffmpeg_wrapper(frameseq_dir, audio_name, output_name, framerate=0, pattern="
 
 if __name__ == '__main__':
 
-    outfile = "scream4_8"
+    outfile = "scream4_9"
     if exists(f"media/{outfile}.mp4"):
         print(f"WARNING: DO YOU REALLY WANT TO OVERWRITE {outfile}.mp4")
         d = input("ENTER '!x' TO OVERWRITE\n")

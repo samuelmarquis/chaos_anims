@@ -44,6 +44,8 @@ if __name__ == "__main__":
     if suff is None:
         makedirs(f"{pdir}/src_frames", exist_ok=True)
         makedirs(f"{pdir}/masks", exist_ok=True)
+        makedirs(f"{pdir}/depth", exist_ok=True)
+        makedirs(f"{pdir}/depth_masks", exist_ok=True)
         makedirs(f"{pdir}/output", exist_ok=True)
         makedirs(f"{pdir}/sieve", exist_ok=True)
 
@@ -51,6 +53,8 @@ if __name__ == "__main__":
         for s in suff:
             makedirs(f"{pdir}/{s}_src_frames", exist_ok=True)
             makedirs(f"{pdir}/{s}_masks", exist_ok=True)
+            makedirs(f"{pdir}/{s}_depth", exist_ok=True)
+            makedirs(f"{pdir}/{s}_depth_masks", exist_ok=True)
             makedirs(f"{pdir}/{s}_output", exist_ok=True)
             makedirs(f"{pdir}/{s}_sieve", exist_ok=True)
 
