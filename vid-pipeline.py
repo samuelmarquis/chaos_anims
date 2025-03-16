@@ -14,7 +14,7 @@ from functools import partial
 from multiprocessing import Process
 
 pname = "scream"
-pidx = 2
+pidx = 5
 suff = None
 
 base = "vid_pipe"

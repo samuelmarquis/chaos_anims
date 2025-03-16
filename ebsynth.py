@@ -1,4 +1,4 @@
-import os
+from os import listdir, chdir
 import subprocess
 
 from tqdm import tqdm
@@ -7,47 +7,50 @@ from util import sorted_alphanumeric
 from threading import Thread
 from time import sleep
 
-def ebsynth_wrapper(style_dir, style_mask_dir, guide_mask_dir, output_dir):
+def ebsynth_wrapper(sd, md, gd, od):
+    print("Starting ebsynth:")
+    print(f" - style={sd}")
+    print(f" - md={md} : gd={gd}")
+    print(f" - out={od}")
     def ebcall(n,f):
-        s,sm,gm,dm = f
-        args = ['./ebsynth/bin/ebsynth.exe', '-backend', 'cuda',
-                '-style', f'{style_dir}/{s}',
-                '-guide', f'{style_mask_dir}/{sm}', f'{guide_mask_dir}/{gm}',
-                '-output', f'{output_dir}/{n:05d}.png']
-        subprocess.run(args, stdout=None)
-        return f"Finished frame {n:05d}"
-
-    for n,f in tqdm(enumerate(zip(sorted_alphanumeric(os.listdir(style_dir)),
-                             sorted_alphanumeric(os.listdir(style_mask_dir)),
-                             sorted_alphanumeric(os.listdir(guide_mask_dir))))):
-        ebcall(n,f)
-
-def ebsynth2_wrapper(base_dir, output_dir):
-    def ebcall(n,f):
-        s,sm,gm,dm,gdm = f
-        args = ['./ebsynth/bin/ebsynth.exe', '-backend', 'cuda',
-                '-style', f'{base_dir}/style2/{s}',
-                '-guide', f'{base_dir}/style_masks2/{sm}', f'{base_dir}/masks2/{gm}',
-                '-guide', f'{base_dir}/style_masks/{dm}', f'{base_dir}/depth/{gdm}',
-                '-guide', f'{base_dir}/style/{s}', f'{base_dir}/masks/{n}.png',
-                '-output', f'{output_dir}/{n:05d}.png']
+        s,m,g = f
+        args = ['../../ebsynth/bin/ebsynth.exe', '-backend', 'cuda',
+                '-style', f'{sd}/{s}',
+                '-guide', f'{md}/{m}', f'{gd}/{g}',
+                '-output', f'{od}/{n:05d}.png']
         subprocess.run(args, stdout=subprocess.DEVNULL)
         return f"Finished frame {n:05d}"
 
-    for n,f in enumerate(zip(sorted_alphanumeric(os.listdir(f"{base_dir}/style2")),
-                             sorted_alphanumeric(os.listdir(f"{base_dir}/style_masks2")),
-                             sorted_alphanumeric(os.listdir(f"{base_dir}/masks2")),
-                             sorted_alphanumeric(os.listdir(f"{base_dir}/style_masks")),
-                             sorted_alphanumeric(os.listdir(f"{base_dir}/depth")))):
+    for n,f in tqdm(enumerate(zip(sorted_alphanumeric(listdir(sd)),
+                             sorted_alphanumeric(listdir(md)),
+                             sorted_alphanumeric(listdir(od))))):
         ebcall(n,f)
 
+def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
+    print("Starting ebsynth:")
+    print(f" - style={sd}")
+    print(f" - m1d={m1d} : g1d={g1d}")
+    print(f" - m2d={m2d} : g2d={g2d}")
+    print(f" - out={od}")
+    def ebcall(n,f):
+        s,m1,g1,m2,g2 = f
+        args = ['../../ebsynth/bin/ebsynth.exe', '-backend', 'cuda',
+                '-style', f'{sd}/{s}',
+                '-guide', f'{m1d}/{m1}', f'{g1d}/{g1}',
+                '-guide', f'{m2d}/{m2}', f'{g2d}/{g2}',
+                '-output', f'{od}/{n:05d}.png']
+        subprocess.run(args, stdout=subprocess.DEVNULL)
+        return f"Finished frame {n:05d}"
+
+    for n,f in tqdm(enumerate(zip(sorted_alphanumeric(listdir(sd)),
+                             sorted_alphanumeric(listdir(m1d)),
+                             sorted_alphanumeric(listdir(g1d)),
+                             sorted_alphanumeric(listdir(m2d)),
+                             sorted_alphanumeric(listdir(g2d))))):
+        ebcall(n,f)
 
 if __name__ == '__main__':
-    base = "scream3"
-    sub = ""  # Don't forget the _
-    full = f"{base}{sub}"
-    #ebsynth_wrapper(f"vid_pipe/{base}/style2",
-    #                f"vid_pipe/{base}/style_masks",
-    #                f"vid_pipe/{base}/depth",
-    #                f"vid_pipe/{base}/{sub}output")
-    ebsynth2_wrapper(f"vid_pipe/{base}", f"vid_pipe/{base}/output")
+    base = "scream4"
+    chdir(f"vid_pipe/{base}")
+    ebsynth_wrapper("style", "style", "masks2", "output1")
+    #ebsynth2_wrapper("style", "style_masks2", "src_frames", "depth_masks", "depth", "output4")

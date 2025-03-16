@@ -9,7 +9,7 @@
 			<int name="image_layers">1</int>
 			<string name="antialiasing_mode">strong</string>
 			<real name="brightness">6</real>
-			<vec4 name="background_colour">1.4 1.4 1 1</vec4>
+			<vec4 name="background_colour">1 0.7 0.65 1</vec4>
 			<bool name="apply_bg_before_curves">false</bool>
 			<real name="flam3_gamma">400</real>
 			<real name="flam3_vibrancy">1.3</real>
@@ -20,8 +20,8 @@
 				<values>1 1 1 1</values>
 			</table>
 		</imaging>
-		<real name="anim_length">25</real>
-		<real name="anim_fps">30</real>
+		<real name="anim_length">26</real>
+		<real name="anim_fps">24</real>
 		<real name="anim_exposure_time">0.0333</real>
 		<string name="anim_exposure_shape">uniform</string>
 		<camera name="Camera">
@@ -74,6 +74,7 @@
 						<real name="Iterator 2 weight">1</real>
 						<real name="Iterator 3 weight">1</real>
 						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
 					</node>
 				</weights_selector>
 				<real name="time_scale">1</real>
@@ -126,6 +127,7 @@
 						<real name="Iterator 2 weight">1</real>
 						<real name="Iterator 3 weight">1</real>
 						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
 					</node>
 				</weights_selector>
 				<real name="time_scale">1</real>
@@ -199,6 +201,7 @@
 						<real name="Iterator 2 weight">1</real>
 						<real name="Iterator 3 weight">1</real>
 						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
 					</node>
 				</weights_selector>
 				<real name="time_scale">1</real>
@@ -337,6 +340,45 @@
 						<real name="Iterator 2 weight">1</real>
 						<real name="Iterator 3 weight">1</real>
 						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
+					</node>
+				</weights_selector>
+				<real name="time_scale">1</real>
+			</iterator>
+			<iterator name="Iterator 5">
+				<flam3_transform name="flam3 transform">
+					<affine2 name="Pre affine">
+						<real name="x_axis_angle">0</real>
+						<real name="x_axis_length">1</real>
+						<real name="y_axis_angle">90</real>
+						<real name="y_axis_length">1</real>
+						<vec2 name="offset">0 0</vec2>
+					</affine2>
+					<node name="transforms">
+						<flam3_variation name="New variation">
+							<string name="variation_name">loonie</string>
+							<params>
+								<real name="loonie">1</real>
+							</params>
+						</flam3_variation>
+					</node>
+				</flam3_transform>
+				<flam3_shader name="Shader">
+					<real name="palette_index">0</real>
+					<real name="blend_speed">0.5</real>
+					<real name="opacity">1</real>
+					<table name="layer_weights">
+						<values>1 1 1 1</values>
+					</table>
+				</flam3_shader>
+				<weights_selector name="weights">
+					<real name="Base weight">1</real>
+					<node name="per_iterator_weights">
+						<real name="Iterator 1 weight">1</real>
+						<real name="Iterator 2 weight">1</real>
+						<real name="Iterator 3 weight">1</real>
+						<real name="Iterator 4 weight">1</real>
+						<real name="Iterator 5 weight">1</real>
 					</node>
 				</weights_selector>
 				<real name="time_scale">1</real>
@@ -345,10 +387,10 @@
 		<colouring>
 			<curve name="hue">
 				<table name="knots">
-					<values>-0.0039619356 0.32028526 0.3402536 1</values>
+					<values>0.0011389202 0.32642367 0.3402536 1</values>
 				</table>
 				<table name="values">
-					<values>1.076087 0.84130436 0.92608696 0.791183</values>
+					<values>0.59784174 0.8136691 0.92608696 0.791183</values>
 				</table>
 				<table name="back_tension">
 					<values>0 0 0 0</values>

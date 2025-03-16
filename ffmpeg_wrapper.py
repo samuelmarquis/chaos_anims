@@ -1,6 +1,7 @@
 import subprocess
 from os.path import exists
 
+
 def ffmpeg_wrapper(frameseq_dir, audio_name, output_name, framerate=0, pattern="%05d", comp_rat=30):
     args = ['C:\Windows\System32\wsl.exe',
             'ffmpeg', '-y',
@@ -19,7 +20,8 @@ def ffmpeg_wrapper(frameseq_dir, audio_name, output_name, framerate=0, pattern="
     subprocess.run(args, shell=True)
 
 if __name__ == '__main__':
-    outfile = "scream3_9"
+
+    outfile = "scream4_8"
     if exists(f"media/{outfile}.mp4"):
         print(f"WARNING: DO YOU REALLY WANT TO OVERWRITE {outfile}.mp4")
         d = input("ENTER '!x' TO OVERWRITE\n")
@@ -27,8 +29,8 @@ if __name__ == '__main__':
             print("ABORTING")
             exit(1)
 
-    ffmpeg_wrapper('vid_pipe/scream3/output3',
-                   'audio/scream/3s.wav',
+    ffmpeg_wrapper('vid_pipe/scream4/output1',
+                   'audio/scream/4s.wav',
                    outfile,
                    framerate=24,
                    pattern="%05d",

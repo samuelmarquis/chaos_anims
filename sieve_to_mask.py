@@ -9,24 +9,16 @@ from util import saturate, grad_map, read_image, write_image, channel_saturate, 
 
 def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     mask_colors = np.array([
-        [1, 1, 0],# bg
-        [0, 0, 1],# jacket
-        [0, 1, 0],# shirt
-        [0, 0, 1],# skin
-        [1, 0, 0],# hair
-        [1, 0, 1],# treeline
-        [0, 0, 1],# sky
+        [0, 0, 1],# sam1
+        [0, 0, 1],# sam2
+        [0, 0, 1],# sam3
         ])
     sat_h = [8,10,12]
     sat_c = [0.5,0.5,0.5]
     maps = [
-        lambda a, c, cnf, msk: np.where (msk > 0, a*c*1.2, a),  # bg
-        lambda a, c, cnf, msk: np.where (msk > 0, a*c*1.2, a),  # jacket
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # bg
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # jacket
         lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # shirt
-        lambda a, c, cnf, msk: np.where (msk > 0, grad_map(saturate(a, 12, 0.3), [1,0,0], [0,0,1]), a),  # skin
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # hair
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # treeline
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # sky
     ]
 
     def frame(nf):
@@ -108,9 +100,9 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
 
 
 if __name__ == '__main__':
-    base = "scream3"
+    base = "scream4"
     sub = ""
     full = f"vid_pipe/{base}/{sub}"
     merge_masks(f"{full}src_frames",
                 f"{full}sieve",
-                f"{full}masks2", 7)
+                f"{full}masks", 3)
