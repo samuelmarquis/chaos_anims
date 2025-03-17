@@ -9,7 +9,7 @@
 			<int name="image_layers">1</int>
 			<string name="antialiasing_mode">strong</string>
 			<real name="brightness">4</real>
-			<vec4 name="background_colour">0.05 0.095 0.2 1</vec4>
+			<vec4 name="background_colour">0 0 0 1</vec4>
 			<bool name="apply_bg_before_curves">false</bool>
 			<real name="flam3_gamma">3.6</real>
 			<real name="flam3_vibrancy">1</real>
@@ -21,7 +21,7 @@
 			</table>
 		</imaging>
 		<real name="anim_length">20</real>
-		<real name="anim_fps">30</real>
+		<real name="anim_fps">24</real>
 		<real name="anim_exposure_time">0.0333</real>
 		<string name="anim_exposure_shape">uniform</string>
 		<camera name="Camera">
@@ -229,8 +229,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.8653332157991827</real>
-					<real name="blend_speed">0.07283121850328346</real>
+					<real name="palette_index">0.5293601476587355</real>
+					<real name="blend_speed">0.2281378724262511</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>
@@ -266,8 +266,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.8203354876022786</real>
-					<real name="blend_speed">0.6808111772322523</real>
+					<real name="palette_index">0.366073505487293</real>
+					<real name="blend_speed">0.4135498913175211</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>
@@ -412,8 +412,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.5330123950261623</real>
-					<real name="blend_speed">0.1485306994458705</real>
+					<real name="palette_index">0.5111359828151762</real>
+					<real name="blend_speed">0.03370722123826248</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>
@@ -449,8 +449,8 @@
 					</node>
 				</flam3_transform>
 				<flam3_shader name="Shader">
-					<real name="palette_index">0.30180505756288767</real>
-					<real name="blend_speed">0.11494799954373117</real>
+					<real name="palette_index">0.09632669715210795</real>
+					<real name="blend_speed">0.23511464000491247</real>
 					<real name="opacity">1</real>
 					<table name="layer_weights">
 						<values>1 1 1 1</values>

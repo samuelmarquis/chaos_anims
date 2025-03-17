@@ -14,7 +14,8 @@ from functools import partial
 from multiprocessing import Process
 
 pname = "scream"
-pidx = 6
+pidx = 12
+exp_dirs = 5
 suff = None
 
 base = "vid_pipe"
@@ -43,10 +44,11 @@ if __name__ == "__main__":
 
     if suff is None:
         makedirs(f"{pdir}/src_frames", exist_ok=True)
-        makedirs(f"{pdir}/masks", exist_ok=True)
         makedirs(f"{pdir}/depth", exist_ok=True)
         makedirs(f"{pdir}/depth_masks", exist_ok=True)
-        makedirs(f"{pdir}/output", exist_ok=True)
+        for i in range(exp_dirs):
+            makedirs(f"{pdir}/masks", exist_ok=True)
+            makedirs(f"{pdir}/output{i}", exist_ok=True)
         makedirs(f"{pdir}/sieve", exist_ok=True)
 
     else:

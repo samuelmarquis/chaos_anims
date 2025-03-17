@@ -12,7 +12,7 @@ audio_name = f"{number}"
 
 song, sr, _, duration_f, duration_s = load_song(f"{audioroot}/{audio_name}s.wav", fr=fr)
 flows = compute_flows(song, sr)
-print(f"Computed flows for {audio_name}")
+print(f"Computed flows for {audio_name}: ls={duration_s}, lf={duration_f}")
 
 stems = []
 sflows = {}

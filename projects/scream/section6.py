@@ -20,6 +20,10 @@ def animate(iterators, flows, sflows):
     iterators[2].vibration2_tmfreq = bflows.noteAb
     # Iterator 3:
     iterators[3].x_axis_angle = bflows.colorwheel * 360
-    iterators[3].x_axis_length = bflows.noteEb * 4 + 0.2
+    iterators[3].x_axis_length = bflows.noteF * 4 + 0.2
     iterators[3].y_axis_angle = bflows.colorwheel * 360 + 90
-    iterators[3].y_axis_length = bflows.noteEb * 4 + 0.2
+    iterators[3].y_axis_length = bflows.noteF * 4 + 0.2
+    iterators[3].faber_x_lituus = kflows.rms
+    iterators[3].faber_x_lituus_a = pflows.rms
+    # Iterator 4:
+    iterators[4].escher_beta = 3 + (vflows.rms ** 1.2)
