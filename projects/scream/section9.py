@@ -2,7 +2,7 @@ from .screamproject import *
 from parameters import *
 
 number = 9
-stem_suf = ['p','k','i','v','b']
+stem_suf = ['p','k','v','b']
 
 flamepath = f"{chaosroot}/{number}.chaos"
 
@@ -11,7 +11,6 @@ def animate(iterators, flows, sflows):
     vflows = sflows["v"]
     pflows = sflows["p"]
     kflows = sflows["k"]
-    iflows = sflows["i"]
     bflows = sflows["b"]
     # Camera:
     # Iterator 1:
@@ -23,6 +22,6 @@ def animate(iterators, flows, sflows):
     iterators[3].y_axis_angle = gatescaler(vflows.rms*2, 0.5, True) * 360 + 90
     iterators[3].offset = pol2car(bflows.rms, bflows.colorwheel)
     # Iterator 4:
-    iterators[4].x_axis_length = 1 - iflows.rms
-    iterators[4].y_axis_length = 1 - iflows.rms
+    iterators[4].x_axis_length = 1 - flows.rms
+    iterators[4].y_axis_length = 1 - flows.rms
     iterators[4].escher_beta = gatescaler(kflows.rms * 40)

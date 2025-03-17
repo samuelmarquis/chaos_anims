@@ -1,4 +1,5 @@
 from os import listdir, chdir
+from pathlib import Path
 import subprocess
 
 from tqdm import tqdm
@@ -7,7 +8,7 @@ from util import sorted_alphanumeric
 from threading import Thread
 from time import sleep
 
-which = "scream6"
+which = "scream9"
 
 def ebsynth_wrapper(sd, md, gd, od):
     print(f"Starting ebsynth ({which}):")
@@ -27,6 +28,14 @@ def ebsynth_wrapper(sd, md, gd, od):
                                   sorted_alphanumeric(listdir(md)),
                                   sorted_alphanumeric(listdir(gd)),
                                   ))):
+        #if n<???:
+        #   continue
+
+        #pf = Path(f"{od}/{n:05d}.png")
+        #if pf.exists():
+        #    continue
+        #print(f"regenerating {n}")
+
         ebcall(n,f)
 
 def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
@@ -54,5 +63,5 @@ def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
 
 if __name__ == '__main__':
     chdir(f"vid_pipe/{which}")
-    ebsynth_wrapper("style", "style", "masks2", "output5")
+    ebsynth_wrapper("style1", "style2", "src_frames", "output1")
     #ebsynth2_wrapper("style", "style", "masks3", "depth_masks", "depth", "output3")

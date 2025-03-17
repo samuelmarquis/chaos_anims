@@ -6,7 +6,7 @@ from tqdm import tqdm
 from util import read_image, write_image, noise, saturate, grad_map, edge_detect, sorted_alphanumeric, channel_saturate, \
     write_image2, read_image2
 
-which = "scream6"
+which = "scream9"
 
 def dual_cutout():
     chdir(f"vid_pipe/{which}")
@@ -41,10 +41,10 @@ def concat():
 
 def map_folder():
     chdir(f"vid_pipe/{which}")
-    for n,s in tqdm(enumerate(listdir("style/"))):
-        s = read_image2(f"style/{s}")#*read_image2(f"depth/{n:08d}.png")
-        a = grad_map(s, [0,0,0],[1,1,1])
-        write_image(f"depth_masks/{n:05d}.png", a)
+    for n,s in tqdm(enumerate(listdir("src_frames/"))):
+        s = read_image2(f"src_frames/{s}")*saturate(read_image2(f"depth/{n:08d}.png"), 8, 0.2)
+        a = saturate(s,12,0.35)
+        write_image(f"masks1/{n:05d}.png", a)
 
 if __name__ == "__main__":
    map_folder()
