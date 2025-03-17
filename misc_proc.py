@@ -6,9 +6,10 @@ from tqdm import tqdm
 from util import read_image, write_image, noise, saturate, grad_map, edge_detect, sorted_alphanumeric, channel_saturate, \
     write_image2, read_image2
 
+which = "scream1"
 
-def dual_cutout(scream_n):
-    chdir(f"vid_pipe/{scream_n}")
+def dual_cutout():
+    chdir(f"vid_pipe/{which}")
     for n, (s, st) in tqdm(enumerate(zip(listdir("output2"), listdir("output4")))):
         s1   = read_image2(f"sieve/masks/mask_{n}_1.png")
         s2 = read_image2(f"sieve/masks/mask_{n}_2.png")
@@ -21,7 +22,7 @@ def dual_cutout(scream_n):
         write_image(f"output1/{n:05d}.png", a)
 
 def fix_times():
-    chdir("vid_pipe/scream4")
+    chdir(f"vid_pipe/{which}")
     makedirs("style_masks2", exist_ok=True)
     for n,f in tqdm(enumerate(listdir("style_masks2_old"))):
         if n<24:
@@ -39,11 +40,11 @@ def concat():
             n += 1
 
 def map_folder():
-    chdir("vid_pipe/scream4")
-    for n,s in tqdm(enumerate(listdir("src_frames/"))):
-        s = read_image2(f"src_frames/{s}")
-        a = channel_saturate(s, [12,12,12],[0.15,0.15,0.15])
-        write_image(f"masks2/{n:05d}.png", a)
+    chdir(f"vid_pipe/{which}")
+    for n,s in tqdm(enumerate(listdir("d_src_frames/"))):
+        s = read_image2(f"d_src_frames/{s}")#*read_image2(f"depth/{n:08d}.png")
+        a = channel_saturate(s, [10,10,11],[0.20,0.20,0.15])
+        write_image(f"d_masks/{n:05d}.png", a)
 
 if __name__ == "__main__":
    map_folder()

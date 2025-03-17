@@ -7,8 +7,10 @@ from util import sorted_alphanumeric
 from threading import Thread
 from time import sleep
 
+which = "scream6"
+
 def ebsynth_wrapper(sd, md, gd, od):
-    print("Starting ebsynth:")
+    print(f"Starting ebsynth ({which}):")
     print(f" - style={sd}")
     print(f" - md={md} : gd={gd}")
     print(f" - out={od}")
@@ -22,8 +24,9 @@ def ebsynth_wrapper(sd, md, gd, od):
         return f"Finished frame {n:05d}"
 
     for n,f in tqdm(enumerate(zip(sorted_alphanumeric(listdir(sd)),
-                             sorted_alphanumeric(listdir(md)),
-                             sorted_alphanumeric(listdir(od))))):
+                                  sorted_alphanumeric(listdir(md)),
+                                  sorted_alphanumeric(listdir(gd)),
+                                  ))):
         ebcall(n,f)
 
 def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
@@ -50,7 +53,6 @@ def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
         ebcall(n,f)
 
 if __name__ == '__main__':
-    base = "scream4"
-    chdir(f"vid_pipe/{base}")
-    ebsynth_wrapper("style", "style", "masks2", "output1")
-    #ebsynth2_wrapper("style", "style_masks2", "src_frames", "depth_masks", "depth", "output4")
+    chdir(f"vid_pipe/{which}")
+    ebsynth_wrapper("style", "style_masks", "masks3", "output3")
+    #ebsynth2_wrapper("style", "style_masks", "src_frames", "depth_masks", "depth", "output4")

@@ -9,16 +9,28 @@ from util import saturate, grad_map, read_image, write_image, channel_saturate, 
 
 def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     mask_colors = np.array([
-        [0, 0, 1],# sam1
-        [0, 0, 1],# sam2
-        [0, 0, 1],# sam3
+        [0, 0, 0], # sky
+        [0, 1, 0], # tree
+        [0, 0, 0], # grass
+        [0, 1, 0], # concrete
+        [1, 0, 0], # coat
+        [0, 1, 1], # shirt
+        [0, 0, 1], # pants
+        [0, 1, 0], # skin
+        [1, 1, 0], # hair
         ])
     sat_h = [8,10,12]
     sat_c = [0.5,0.5,0.5]
     maps = [
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # bg
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # jacket
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),  # shirt
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# sky
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# tree
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# grass
+        lambda a, c, cnf, msk: np.where(msk > 0, c, a), # concrete
+        lambda a, c, cnf, msk: np.where(msk > 0, c, a), # coat
+        lambda a, c, cnf, msk: np.where(msk > 0, c, a), # shirt
+        lambda a, c, cnf, msk: np.where(msk > 0, c, a), # pants
+        lambda a, c, cnf, msk: np.where(msk > 0, saturate(a*c,8,0.35), a), # skin
+        lambda a, c, cnf, msk: np.where(msk > 0, c, a), # hair
     ]
 
     def frame(nf):
@@ -100,9 +112,9 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
 
 
 if __name__ == '__main__':
-    base = "scream4"
+    base = "scream5"
     sub = ""
     full = f"vid_pipe/{base}/{sub}"
     merge_masks(f"{full}src_frames",
                 f"{full}sieve",
-                f"{full}masks", 3)
+                f"{full}masks3", 9)

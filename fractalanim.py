@@ -6,7 +6,7 @@ import sys
 import matplotlib.pyplot as plt
 np.set_printoptions(threshold=sys.maxsize)
 
-from projects.scream.section4 import *
+from projects.scream.section6 import *
 
 audio_name = f"{number}"
 

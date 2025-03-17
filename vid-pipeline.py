@@ -14,7 +14,7 @@ from functools import partial
 from multiprocessing import Process
 
 pname = "scream"
-pidx = 5
+pidx = 6
 suff = None
 
 base = "vid_pipe"
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             makedirs(f"{pdir}/{s}_sieve", exist_ok=True)
 
     needed = [None]
-
+    """
     with ProcessPoolExecutor() as pool:
         for s in pool.map(do_it, needed):
             print(f"Finished {name}{s}")
@@ -69,3 +69,4 @@ if __name__ == "__main__":
                            framerate=24,
                            pattern="%05d",
                            comp_rat=20)
+                           """
