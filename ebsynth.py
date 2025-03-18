@@ -63,5 +63,6 @@ def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
 
 if __name__ == '__main__':
     chdir(f"vid_pipe/{which}")
-    ebsynth_wrapper("style1", "style2", "src_frames", "output1")
+    #ebsynth_wrapper("style2", "style2", "masks1", "output2")
+    ebsynth2_wrapper("style1", "style2", "masks1", "depth_masks", "depth", "output4")
     #ebsynth2_wrapper("style", "style", "masks3", "depth_masks", "depth", "output3")

@@ -9,26 +9,22 @@ from util import saturate, grad_map, read_image, write_image, channel_saturate, 
 
 def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
     mask_colors = np.array([
-        [1, 1, 1], # sky
-        [0, 0, 0], # tree
-        [0, 0, 1], # concrete
-        [1, 0, 1], # cage
-        [0, 0, 0], # pants
-        [0, 0, 0], # shirt
-        [1, 1, 1], # jacket
+        [0, 0, 0], # grass
+        [0, 1, 1], # black
+        [0, 0, 1], # coat
+        [0, 1, 0], # pants
+        [1, 1, 0], # shirt
         [0, 1, 0], # skin
-        [1, 0, 0], # hair
+        [0, 1, 1], # hair
         ])
     sat_h = [8,10,12]
     sat_c = [0.5,0.5,0.5]
     maps = [
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# sky
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# tree
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# concrete
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# cage
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# pants
-        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# shirt
-        lambda a, c, cnf, msk: np.where (msk > 0, saturate(noise(a, 1), 20, 0), a),# jacket
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# grass
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# black
+        lambda a, c, cnf, msk: np.where (msk > 0, c, a),# coat
+        lambda a, c, cnf, msk: np.where(msk > 0, saturate(noise(a,1),20,0), a),# pants
+        lambda a, c, cnf, msk: np.where(msk > 0, saturate(noise(a,1),20,0), a),# shirt
         lambda a, c, cnf, msk: np.where (msk > 0, grad_map(saturate(a,16,0.35), [0,0,0], [1,1,1]), a),# skin
         lambda a, c, cnf, msk: np.where (msk > 0, grad_map(saturate(a,16,0.35), [0,0,0], [1,1,1]), a),# hair
     ]
@@ -65,56 +61,11 @@ def merge_masks(src_dir, sieve_dir, target_dir, n_layers):
             if n % 100 == 0 and n > 0:
                 print(f"Merged ~{n} masks to {target_dir}")
 
-        """
-        # Water
-        if m==1:
-            a = np.where(msk > [0,0,0], ca, a)
-
-        # Earth
-        if m==2:
-            a = np.where(cf > [0,0,0], a*c, a)
-
-        # Platform
-        if m==3:
-            a = np.where(cf > [0,0,0])
-
-        # Pants
-        if m == 4:
-            None
-
-        #Jacket
-        c = [1,0,0]
-        if m==5:
-            ca = (a**0.5) * c
-            a = np.where(cf > [0.0, 0.0, 0.0], ca, a)
-
-        # Shirt
-        c = [1,1,0]
-        if m==6:
-            a = np.where(cf > [0, 0, 0], c, a)
-
-        # Hands
-        if m==7:
-            None
-
-        # Face
-        c = [0.8,0.7,0.7]
-        if m==8:
-            ca = (np.tanh(((-a+1) * c + 0.1) * 10 - 6) + 1) / 2
-            #ca = a * c
-            a = np.where(cf > [0, 0, 0], ca, a)
-
-        #Hair
-        c = [0,4,0]
-        if m==9:
-            a = np.where(cf > [0, 0, 0], a * c, a)
-        """
-
 
 if __name__ == '__main__':
-    base = "scream6"
+    base = "scream9"
     sub = ""
     full = f"vid_pipe/{base}/{sub}"
     merge_masks(f"{full}src_frames",
                 f"{full}sieve",
-                f"{full}masks2", 9)
+                f"{full}masks3", 7)

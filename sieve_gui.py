@@ -6,8 +6,8 @@ import os
 
 # Thanks Grok
 
-PATH_BASE = "vid_pipe/scream9"
-FRAME_INDEX = 0
+PATH_BASE = "vid_pipe/scream910"
+FRAME_INDEX = 26
 IMAGE_PATH = f"{PATH_BASE}/src_frames/{FRAME_INDEX:05d}.png"
 ANN_PATH = f"{PATH_BASE}/annotations.json"
 
