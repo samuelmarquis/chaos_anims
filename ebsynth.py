@@ -8,7 +8,7 @@ from util import sorted_alphanumeric
 from threading import Thread
 from time import sleep
 
-which = "scream910"
+which = "scream12"
 
 def ebsynth_wrapper(sd, md, gd, od):
     print(f"Starting ebsynth ({which}):")
@@ -16,20 +16,18 @@ def ebsynth_wrapper(sd, md, gd, od):
     print(f" - md={md} : gd={gd}")
     print(f" - out={od}")
     def ebcall(n,f):
-        s,m,g = f
+        g = f
         args = ['../../ebsynth/bin/ebsynth.exe', '-backend', 'cuda',
-                '-style', f'{sd}/{s}',
-                '-guide', f'{md}/{m}', f'{gd}/{g}',
+                '-style', f'{sd}/sole.png',
+                '-guide', f'{md}/sole.png', f'{gd}/{g}',
                 '-output', f'{od}/{n:05d}.png']
         subprocess.run(args, stdout=subprocess.DEVNULL)
         return f"Finished frame {n:05d}"
 
-    for n,f in tqdm(enumerate(zip(sorted_alphanumeric(listdir(sd)),
-                                  sorted_alphanumeric(listdir(md)),
-                                  sorted_alphanumeric(listdir(gd)),
-                                  ))):
-        #if n<???:
-        #   continue
+    for n,f in enumerate(tqdm(sorted_alphanumeric(listdir(gd)),
+                                  )):
+        if n<160:
+           continue
 
         #pf = Path(f"{od}/{n:05d}.png")
         #if pf.exists():
@@ -63,6 +61,6 @@ def ebsynth2_wrapper(sd, m1d, g1d, m2d, g2d, od):
 
 if __name__ == '__main__':
     chdir(f"vid_pipe/{which}")
-    ebsynth_wrapper("style", "style_masks", "src_frames", "output5")
+    ebsynth_wrapper("style", "style", "masks", "output1")
     #ebsynth2_wrapper("style", "style_masks", "masks1", "depth_masks", "depth", "output4")
     #ebsynth2_wrapper("style", "style", "masks3", "depth_masks", "depth", "output3")
