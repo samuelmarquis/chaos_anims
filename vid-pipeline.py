@@ -13,8 +13,8 @@ from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from multiprocessing import Process
 
-pname = "scream"
-pidx = 12
+pname = "wayelmpromo2"
+pidx = 1
 exp_dirs = 5
 suff = None
 
@@ -47,8 +47,8 @@ if __name__ == "__main__":
         makedirs(f"{pdir}/depth", exist_ok=True)
         makedirs(f"{pdir}/depth_masks", exist_ok=True)
         for i in range(exp_dirs):
-            makedirs(f"{pdir}/masks", exist_ok=True)
-            makedirs(f"{pdir}/output{i}", exist_ok=True)
+            makedirs(f"{pdir}/masks{i+1}", exist_ok=True)
+            makedirs(f"{pdir}/output{i+1}", exist_ok=True)
         makedirs(f"{pdir}/sieve", exist_ok=True)
 
     else:

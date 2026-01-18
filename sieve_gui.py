@@ -6,9 +6,9 @@ import os
 
 # Thanks Grok
 
-PATH_BASE = "vid_pipe/scream0"
-FRAME_INDEX = 0
-IMAGE_PATH = f"{PATH_BASE}/a_src_frames/{FRAME_INDEX:05d}.png"
+PATH_BASE = "vid_pipe/wayelmpromo21"
+FRAME_INDEX = 50
+IMAGE_PATH = f"{PATH_BASE}/src_frames/{FRAME_INDEX:08d}.png"
 ANN_PATH = f"{PATH_BASE}/annotations.json"
 
 class ImageAnnotator:

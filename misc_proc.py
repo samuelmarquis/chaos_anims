@@ -6,7 +6,7 @@ from tqdm import tqdm
 from util import read_image, write_image, noise, saturate, grad_map, edge_detect, sorted_alphanumeric, channel_saturate, \
     write_image2, read_image2
 
-which = "scream11"
+which = "phyloendminus1"
 
 def dual_cutout():
     chdir(f"vid_pipe/{which}")
@@ -41,13 +41,15 @@ def concat():
 
 def map_folder():
     chdir(f"vid_pipe/{which}")
-    for n,s in enumerate(tqdm(listdir("in_clip/"))):
-        a = read_image2(f"in_clip/{s}")# * read_image2(f"depth/{n:08d}.png")
-        a = np.where((read_image2(f"clip_mask/mask_{1 if n==0 else n}_1.png").astype(np.bool)) > 0, [0,0,0], a)
+    tgt = "src_frames"
+    for n,f in enumerate(tqdm(listdir(tgt))):
+        a = read_image2(f"{tgt}/{f}")# * read_image2(f"depth/{n:08d}.png")
+        a[:,:,1] = a[:,:,2] = a[:,:,0]
+        a *= read_image2(f"depth/{n:08d}.png")
         #s = np.where(read_image2(f"sieve/masks/mask_{n}_6.png")>0, s-0.12, s) # skin
         #a = read_image2(f"style/{s}")
         #a = grad_map(a, [0,0,0],[1,1,1])
-        write_image(f"out_clip/{n:05d}.png", a)
+        write_image(f"masks/{n:05d}.png", a)
 
 if __name__ == "__main__":
    map_folder()

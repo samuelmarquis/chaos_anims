@@ -12,17 +12,15 @@ def animate(iterators, flows, sflows):
     kflows = sflows["k"]
     bflows = sflows["b"]
     vflows = sflows['v']
+    # Camera:
     # Iterator 1:
-    iterators[1].offset = (bflows.rms *2 - 1, bflows.colorwheel * 2 - 1)
     # Iterator 2:
-    iterators[2].modulus_x = (slew(kflows.lf, 0.05, "down") * 3) ** 0.5
-    iterators[2].modulus_y = (slew(pflows.lm, 0.05, "down") * 3) ** 0.5
-    iterators[2].offset = (bflows.lm*2-1, bflows.hm*2-1)
+    iterators[2].faber_x_hypergon = bflows.rms
+    iterators[2].faber_x_hypergon_r = bflows.colorwheel
+    iterators[2].faber_x_star = flows.centroid
+    iterators[2].faber_x_lituus = -2 + (kflows.rms*2)
+    iterators[2].faber_x_lituus_a = vflows.colorwheel * 8 - 4
+    iterators[2].faber_x_super = pflows.rms
     # Iterator 3:
-    iterators[3].vibration2_freq = bflows.mincorr * 100
-    iterators[3].vibration2_freq2 = bflows.majcorr * 100
-    iterators[3].vibration2_dmfreq = vflows.noteC * 50
-    iterators[3].vibration2_tmfreq = vflows.noteF * 75
-    iterators[3].vibration2_fmfreq2 = vflows.noteGb * 125
-    iterators[3].vibration2_amfreq2 = vflows.noteDb * 200
+    # Iterator 4:
 
